@@ -1,0 +1,68 @@
+<div class="text-xl grow mb-4"><%= @hour.persisted? ? 'Edit' : 'Log' %> Hours</div>
+
+<div class="px-3">
+	<%= form_with model: @hour, local: true do |f| %>
+		<%= render partial: 'components/input_and_label', locals: {
+				f: f,
+				field: :short_desc,
+				type: 'text',
+				label: 'Short Description'
+		} %>
+		<%= render partial: 'components/textarea_and_label', locals: {
+				f: f,
+				field: :long_desc,
+				label: 'Long Description'
+		} %>
+		<%= f.label :topic_id, 'Topic', class: 'mb-1 block' %>
+		<%= f.select :topic_id, @topics.map{ |topic| [topic.name, topic.id] }, { prompt: 'Choose...' }, { class: 'rounded mb-2' } %>
+		<fieldset class="border border-black rounded px-5 pb-4 pt-1 mb-3" data-controller="edit-form">
+			<legend>Log Hours Using</legend>
+			<label for="start-end-format">Start and End Time</label>
+			<input type="radio" name="format" id="start-end-format" class="ml-2 mr-4" checked data-action="edit-form#option1">
+			<label for="time-diff-format">Time Difference</label>
+			<input type="radio" name="format" id="time-diff-format" class="ml-2 mr-4" data-action="edit-form#option2">
+			<div data-edit-form-target="option1">
+				<div class="py-1"></div>
+				<%= render partial: 'components/datetime_and_label', locals: {
+						f: f,
+						field: :begin,
+						label: 'Start Time',
+						data: {
+							'edit-form-target': 'start',
+						},
+				} %>
+				<div class="py-1"></div>
+				<%= render partial: 'components/datetime_and_label', locals: {
+						f: f,
+						field: :end,
+						label: 'End Time',
+						data: {
+							'edit-form-target': 'end',
+						},
+				} %>
+			</div>
+			<div class="hidden pt-2" data-edit-form-target="option2">
+				<input class="rounded w-20 outline-none inline" type="number" min="0" step="1" value="0" data-edit-form-target="hours" data-action="click->edit-form#updateTime"/>
+				<label for="diff" class="mr-4">hrs</label>
+				<input class="rounded w-20 outline-none inline" type="number" min="0" step="1" value="0" data-edit-form-target="minutes" data-action="click->edit-form#updateTime"/>
+				<label for="diff" class="mr-4">mins</label>
+			</div>
+		</fieldset>
+		<fieldset class="flex">
+			<div class="py-2 px-4 bg-indigo-800 rounded text-white w-max">
+				<% if @hour.persisted? %>
+					<%= f.submit "Save" %>
+				<% else %>
+					<%= f.submit "Create" %>
+				<% end %>
+			</div>
+			<div class="py-2 px-4 border border-indigo-800 rounded w-max ml-2 text-indigo-800">
+				<% if @hour.persisted? %>
+					<%= link_to 'Cancel', @hour %>
+				<% else %>
+					<a href="/hours">Cancel</a>
+				<% end %>
+			</div>
+		</fieldset>
+	<% end %>
+</div>

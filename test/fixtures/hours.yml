@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  begin: 2023-11-07 16:11:34
+  end: 2023-11-07 16:11:34
+  topic: one
+
+two:
+  begin: 2023-11-07 16:11:34
+  end: 2023-11-07 16:11:34
+  topic: two

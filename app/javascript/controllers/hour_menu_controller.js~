@@ -1,0 +1,17 @@
+import { Controller } from '@hotwired/stimulus';
+
+export default class extends Controller {
+		static targets = ['menu'];
+
+		toggle() {
+				if (this.menuTarget.classList.contains('hidden')) {
+						this.menuTarget.classList.remove('hidden');
+						this.menuTarget.classList.remove('opacity-0');
+						this.menuTarget.classList.remove('-translate-y-20');
+						return;
+				}
+				this.menuTarget.classList.add('hidden');
+				this.menuTarget.classList.add('opacity-0');
+				this.menuTarget.classList.add('-translate-y-20');
+		}
+}

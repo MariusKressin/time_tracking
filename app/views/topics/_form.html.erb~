@@ -1,0 +1,28 @@
+<div class="text-xl grow mb-4"><%= @topic.persisted? ? 'Edit' : 'New'%> Topic</div>
+
+<div class="px-3">
+	<%= form_with model: @topic, local: true do |f| %>
+		<%= render partial: 'components/input_and_label', locals: {
+				f: f,
+				label: 'Name',
+				field: :name,
+		} %>
+		<%= render partial: 'components/textarea_and_label', locals: {
+				f: f,
+				label: 'Description',
+				field: :description,
+		} %>
+		<%= render partial: 'components/money_and_label', locals: {
+				f: f,
+				label: 'Hourly Rate',
+				field: :rate_in_dollars,
+		} %>
+		<div class="py-2 px-4 bg-indigo-800 rounded text-white w-max">
+			<% if @topic.persisted? %>
+				<%= f.submit "Save" %>
+			<% else %>
+				<%= f.submit "Create" %>
+			<% end %>
+		</div>
+	<% end %>
+</div>

@@ -1,0 +1,4 @@
+<div class="flex flex-col mb-3">
+	<%= f.label local_assigns.fetch(:field, nil), local_assigns.fetch(:label), class:"mb-1" %>
+	<%= f.text_field local_assigns.fetch(:field), class:"rounded outline-none grow", type:local_assigns.fetch(:type, 'text') %>
+</div>

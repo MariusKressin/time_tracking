@@ -1,0 +1,4 @@
+<div class="fixed flex top-0 left-0 p-5 w-screen bg-indigo-900 text-white">
+	<img src="/public/logo.svg" />
+	<div class="font-bold font-lg">Time Tracking</div>
+</div>
