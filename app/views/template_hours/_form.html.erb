@@ -1,0 +1,36 @@
+<div class="text-xl grow mb-4"><%= @template_hour.persisted? ? 'Edit' : 'New'%> Hour Template</div>
+
+<div class="px-3">
+	<%= form_with model: @template_hour, local: true do |f| %>
+		<%= render partial: 'components/input_and_label', locals: {
+				f: f,
+				label: 'Hours',
+				field: :hours,
+				type: :number,
+		} %>
+		<%= render partial: 'components/input_and_label', locals: {
+				f: f,
+				label: 'Minutes',
+				field: :minutes,
+				type: :number,
+		} %>
+		<%= f.label :topic_id, 'Topic', class: 'mb-1 block' %>
+		<%= f.select :topic_id, @topics.map{ |topic| [topic.name, topic.id] }, { prompt: 'Choose...' }, { class: 'rounded mb-2' } %>
+		<div class="flex">
+			<div class="py-2 px-4 bg-indigo-800 rounded text-white w-max">
+				<% if @template_hour.persisted? %>
+					<%= f.submit "Save" %>
+				<% else %>
+					<%= f.submit "Create" %>
+				<% end %>
+			</div>
+			<div class="py-2 px-4 border border-indigo-800 rounded w-max ml-2 text-indigo-800">
+				<% if @template_hour.persisted? %>
+					<%= link_to "Cancel", @template_hour.template %>
+				<% else %>
+					<a href="javascript:history.go(-1)">Cancel</a>
+				<% end %>
+			</div>
+		</div>
+	<% end %>
+</div>

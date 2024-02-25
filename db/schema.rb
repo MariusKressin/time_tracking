@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_02_231827) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_20_030943) do
+  create_table "configs", force: :cascade do |t|
+    t.string "key"
+    t.string "value"
+    t.string "dt"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "hours", force: :cascade do |t|
     t.datetime "begin"
     t.datetime "end"
@@ -23,6 +31,24 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_02_231827) do
     t.index ["topic_id"], name: "index_hours_on_topic_id"
   end
 
+  create_table "template_hours", force: :cascade do |t|
+    t.integer "hours"
+    t.integer "minutes"
+    t.integer "topic_id", null: false
+    t.integer "template_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["template_id"], name: "index_template_hours_on_template_id"
+    t.index ["topic_id"], name: "index_template_hours_on_topic_id"
+  end
+
+  create_table "templates", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "topics", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -32,4 +58,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_02_231827) do
   end
 
   add_foreign_key "hours", "topics"
+  add_foreign_key "template_hours", "templates"
+  add_foreign_key "template_hours", "topics"
 end
