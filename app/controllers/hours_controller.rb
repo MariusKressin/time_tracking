@@ -1,6 +1,8 @@
 # frozen_string_literal:true
 
 class HoursController < ApplicationController
+  before_action :set_config
+
   def index
     @hours = Hour.all
   end
@@ -37,7 +39,17 @@ class HoursController < ApplicationController
     @hour = Hour.find(params[:id])
   end
 
+  private
+
   def hour_params
     params.require(:hour).permit(:short_desc, :long_desc, :topic_id, :begin, :end, :auto_date)
+  end
+
+  def set_config
+    @config = {}
+
+    Config.all.each do |c|
+      @config[c.key] = c.value
+    end
   end
 end

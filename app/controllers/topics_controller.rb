@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class TopicsController < ApplicationController
+  before_action :set_config
+
   def index
     @topics = Topic.all
   end
@@ -49,5 +51,13 @@ class TopicsController < ApplicationController
 
   def topic_params
     params.require(:topic).permit(:name, :description, :rate)
+  end
+
+  def set_config
+    @config = {}
+
+    Config.all.each do |c|
+      @config[c.key] = c.value
+    end
   end
 end

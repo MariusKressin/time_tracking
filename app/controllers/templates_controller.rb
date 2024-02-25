@@ -1,4 +1,6 @@
 class TemplatesController < ApplicationController
+  before_action :set_config
+
   def index
     @templates = Template.all
   end
@@ -51,5 +53,13 @@ class TemplatesController < ApplicationController
 
   def template_params
     params.require(:template).permit(:title, :description)
+  end
+
+  def set_config
+    @config = {}
+
+    Config.all.each do |c|
+      @config[c.key] = c.value
+    end
   end
 end

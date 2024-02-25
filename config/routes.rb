@@ -21,7 +21,9 @@ Rails.application.routes.draw do
 
   # Settings
   get '/settings', to: 'settings#index'
-  post '/settings', to: 'settings#update'
+  post '/settings', to: 'settings#update', as: 'config'
+  put '/settings', to: 'settings#update'
+  patch '/settings', to: 'settings#update'
 
   # Export
   get '/export', to: 'export#index'

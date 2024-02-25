@@ -1,6 +1,6 @@
 class TemplateHoursController < ApplicationController
   before_action :set_config
-  
+
   def new
     @template_hour = TemplateHour.new
     @topics = Topic.all
@@ -37,6 +37,10 @@ class TemplateHoursController < ApplicationController
   end
 
   def set_config
-    @config = Config.all
+    @config = {}
+
+    Config.all.each do |c|
+      @config[c.key] = c.value
+    end
   end
 end

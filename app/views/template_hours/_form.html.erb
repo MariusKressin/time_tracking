@@ -17,7 +17,7 @@
 		<%= f.label :topic_id, 'Topic', class: 'mb-1 block' %>
 		<%= f.select :topic_id, @topics.map{ |topic| [topic.name, topic.id] }, { prompt: 'Choose...' }, { class: 'rounded mb-2' } %>
 		<div class="flex">
-			<div class="py-2 px-4 bg-indigo-800 rounded text-white w-max">
+			<div class="py-2 px-4 bg-<%= @config['primary'] %>-800 rounded text-white w-max">
 				<% if @template_hour.persisted? %>
 					<%= f.submit "Save" %>
 				<% else %>
