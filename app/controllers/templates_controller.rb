@@ -31,7 +31,7 @@ class TemplatesController < ApplicationController
 
   def destroy
     @template = Template.find(params[:id])
-    redirect_to '/templates' if @template.destroy
+    redirect_to '/templates', notice: 'Template deleted.' if @template.destroy
   end
 
   def add_to_hours

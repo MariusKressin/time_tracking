@@ -6,7 +6,7 @@ class SettingsController < ApplicationController
   def update
     @config = Config.find_by(key: params[:config][:key])
     @config.assign_attributes(config_params)
-    @config.save
+    redirect_to '/settings' if @config.save
   end
 
   private

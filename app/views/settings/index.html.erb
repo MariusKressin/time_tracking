@@ -1,26 +1,56 @@
 <div class="text-xl">Theme</div>
-<div>
-	<div class="text-lg">Primary Color</div>
-	<%= form_with model: @config.find_by(key: 'primary'), local: true do |f| %>
-		<%= f.radio_button :value, 'red', class: 'transition ease-in-out border w-5 h-5 inline-block rounded-full focus:ring-offset-0 border-slate-600 text-red-700 bg-red-700 ring-red-700/50 focus:ring-red-700/50 mx-1 checked:ring' %>
-		<%= f.radio_button :value, 'orange', class: 'transition ease-in-out border w-5 h-5 inline-block rounded-full focus:ring-offset-0 border-slate-600 text-orange-700 bg-orange-700 ring-orange-700/50 focus:ring-orange-700/50 mx-1 checked:ring' %>
-		<%= f.radio_button :value, 'teal', class: 'transition ease-in-out border w-5 h-5 inline-block rounded-full focus:ring-offset-0 border-slate-600 text-teal-700 bg-teal-700 ring-teal-700/50 focus:ring-teal-700/50 mx-1 checked:ring' %>
-		<%= f.radio_button :value, 'blue', class: 'transition ease-in-out border w-5 h-5 inline-block rounded-full focus:ring-offset-0 border-slate-600 text-blue-700 bg-blue-700 ring-blue-700/50 focus:ring-blue-700/50 mx-1 checked:ring' %>
-		<%= f.radio_button :value, 'indigo', class: 'transition ease-in-out border w-5 h-5 inline-block rounded-full focus:ring-offset-0 border-slate-600 text-indigo-700 bg-indigo-700 ring-indigo-700/50 focus:ring-indigo-700/50 mx-1 checked:ring' %>
-		<%= f.radio_button :value, 'slate', class: 'transition ease-in-out border w-5 h-5 inline-block rounded-full focus:ring-offset-0 border-slate-600 text-slate-700 bg-slate-700 ring-slate-700/50 focus:ring-slate-700/50 mx-1 checked:ring' %>
-		<%= f.hidden_field :key, value: 'primary' %>
-		<%= f.submit 'Submit', class: 'inline-block' %>
-	<% end %>
+<div data-controller="theme">
+	<div class="grid grid-cols-3 w-max">
+		<div class="mr-3">
+			<label for="ri">Red-Indigo</label>
+			<input type="radio" id="ri" name="theme" data-action="change->theme#update" data-theme-target="ri">
+		</div>
+		<div class="mr-3">
+			<label for="ro">Red-Orange</label>
+			<input type="radio" id="ro" name="theme" data-action="change->theme#update" data-theme-target="ro">
+		</div>
+		<div class="mr-3">
+			<label for="tb">Teal-Blue</label>
+			<input type="radio" id="tb" name="theme" data-action="change->theme#update" data-theme-target="tb">
+		</div>
+		<div class="mr-3">
+			<label for="ib">Indigo-Blue</label>
+			<input type="radio" id="ib" name="theme" data-action="change->theme#update" data-theme-target="ib">
+		</div>
+		<div class="mr-3">
+			<label for="bs">Blue-Slate</label>
+			<input type="radio" id="bs" name="theme" data-action="change->theme#update" data-theme-target="bs">
+		</div>
+		<div class="mr-3">
+			<label for="st">Slate-Indigo</label>
+			<input type="radio" id="si" name="theme" data-action="change->theme#update" data-theme-target="si">
+		</div>
+		<input type="submit" data-action="click->theme#submit" />
+	</div>
+	
+	<div class="absolute invisible">
+		<%= form_with model: @config.find_by(key: 'primary'), local: true, data: { 'theme-target' => 'primaryForm' } do |f| %>
+			<%= f.radio_button :value, 'red', data: { 'theme-target' => 'redPrimary' } %>
+			<%= f.radio_button :value, 'orange', data: { 'theme-target' => 'orangePrimary' } %>
+			<%= f.radio_button :value, 'teal', data: { 'theme-target' => 'tealPrimary' } %>
+			<%= f.radio_button :value, 'blue', data: { 'theme-target' => 'bluePrimary' } %>
+			<%= f.radio_button :value, 'indigo', data: { 'theme-target' => 'indigoPrimary' } %>
+			<%= f.radio_button :value, 'slate', data: { 'theme-target' => 'slatePrimary' } %>
+			<%= f.hidden_field :key, value: 'primary' %>
+			<%= f.submit 'Submit', class: 'inline-block' %>
+		<% end %>
+	</div>
 
-	<div class="text-lg">Accent Color</div>
-	<%= form_with model: @config.find_by(key: 'accent'), local: true do |f| %>
-		<%= f.radio_button :value, 'red', class: 'transition ease-in-out border w-5 h-5 inline-block rounded-full focus:ring-offset-0 border-slate-600 text-red-500 bg-red-500 ring-red-500/50 focus:ring-red-500/50 mx-1 checked:ring' %>
-		<%= f.radio_button :value, 'orange', class: 'transition ease-in-out border w-5 h-5 inline-block rounded-full focus:ring-offset-0 border-slate-600 text-orange-500 bg-orange-500 ring-orange-500/50 focus:ring-orange-500/50 mx-1 checked:ring' %>
-		<%= f.radio_button :value, 'teal', class: 'transition ease-in-out border w-5 h-5 inline-block rounded-full focus:ring-offset-0 border-slate-600 text-teal-500 bg-teal-500 ring-teal-500/50 focus:ring-teal-500/50 mx-1 checked:ring' %>
-		<%= f.radio_button :value, 'blue', class: 'transition ease-in-out border w-5 h-5 inline-block rounded-full focus:ring-offset-0 border-slate-600 text-blue-500 bg-blue-500 ring-blue-500/50 focus:ring-blue-500/50 mx-1 checked:ring' %>
-		<%= f.radio_button :value, 'indigo', class: 'transition ease-in-out border w-5 h-5 inline-block rounded-full focus:ring-offset-0 border-slate-600 text-indigo-500 bg-indigo-500 ring-indigo-500/50 focus:ring-indigo-500/50 mx-1 checked:ring' %>
-		<%= f.radio_button :value, 'slate', class: 'transition ease-in-out border w-5 h-5 inline-block rounded-full focus:ring-offset-0 border-slate-600 text-slate-500 bg-slate-500 ring-slate-500/50 focus:ring-slate-500/50 mx-1 checked:ring' %>
-		<%= f.hidden_field :key, value: 'accent' %>
-		<%= f.submit 'Submit', class: 'inline-block' %>
-	<% end %>
+	<div class="absolute invisible">
+		<%= form_with model: @config.find_by(key: 'accent'), local: true, data: { 'theme-target' => 'accentForm' } do |f| %>
+			<%= f.radio_button :value, 'red', data: { 'theme-target' => 'redAccent' } %>
+			<%= f.radio_button :value, 'orange', data: { 'theme-target' => 'orangeAccent' } %>
+			<%= f.radio_button :value, 'teal', data: { 'theme-target' => 'tealAccent' } %>
+			<%= f.radio_button :value, 'blue', data: { 'theme-target' => 'blueAccent' } %>
+			<%= f.radio_button :value, 'indigo', data: { 'theme-target' => 'indigoAccent' } %>
+			<%= f.radio_button :value, 'slate', data: { 'theme-target' => 'slateAccent' } %>
+			<%= f.hidden_field :key, value: 'accent' %>
+			<%= f.submit 'Submit', class: 'inline-block' %>
+		<% end %>
+	</div>
 </div>

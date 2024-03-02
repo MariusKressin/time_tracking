@@ -24,7 +24,7 @@
 					<%= f.submit "Create" %>
 				<% end %>
 			</div>
-			<div class="py-2 px-4 border border-indigo-800 rounded w-max ml-2 text-indigo-800">
+			<div class="py-2 px-4 border border-<%= @config['primary'] %>-800 rounded w-max ml-2 text-<%= @config['primary'] %>-800">
 				<% if @template_hour.persisted? %>
 					<%= link_to "Cancel", @template_hour.template %>
 				<% else %>
