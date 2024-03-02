@@ -1,56 +1,70 @@
+<div data-controller="settings">
 <div class="text-xl">Theme</div>
-<div data-controller="theme">
-	<div class="grid grid-cols-3 w-max">
-		<div class="mr-3">
-			<label for="ri">Red-Indigo</label>
-			<input type="radio" id="ri" name="theme" data-action="change->theme#update" data-theme-target="ri">
+	<div data-controller="theme" class="mt-2">
+		<div class="grid sm:grid-cols-3 grid-cols-2 gap-2 w-max">
+			<div class="mr-3">
+				<input type="radio" id="ri" name="theme" data-action="change->theme#update" data-theme-target="ri" class="peer hidden">
+				<label for="ri" class="border inline-block w-max h-max rounded-md peer-checked:outline-blue-500 peer-checked:outline-2 outline outline-0">
+					<%= image_tag '/images/ri.svg', class: 'w-[100px] overflow-hidden rounded-[5px]' %>
+				</label>
+			</div>
+			<div class="mr-3">
+				<input type="radio" id="ro" name="theme" data-action="change->theme#update" data-theme-target="ro" class="peer hidden">
+				<label for="ro" class="border inline-block w-max h-max rounded-md peer-checked:outline-blue-500 peer-checked:outline-2 outline outline-0">
+					<%= image_tag '/images/ro.svg', class: 'w-[100px] overflow-hidden rounded-[5px]' %>
+				</label>
+			</div>
+			<div class="mr-3">
+				<input type="radio" id="tb" name="theme" data-action="change->theme#update" data-theme-target="tb" class="peer hidden">
+				<label for="tb" class="border inline-block w-max h-max rounded-md peer-checked:outline-blue-500 peer-checked:outline-2 outline outline-0">
+					<%= image_tag '/images/tb.svg', class: 'w-[100px] overflow-hidden rounded-[5px]' %>
+				</label>
+			</div>
+			<div class="mr-3">
+				<input type="radio" id="ib" name="theme" data-action="change->theme#update" data-theme-target="ib" class="peer hidden">
+				<label for="ib" class="border inline-block w-max h-max rounded-md peer-checked:outline-blue-500 peer-checked:outline-2 outline outline-0">
+					<%= image_tag '/images/ib.svg', class: 'w-[100px] overflow-hidden rounded-[5px]' %>
+				</label>
+			</div>
+			<div class="mr-3">
+				<input type="radio" id="bt" name="theme" data-action="change->theme#update" data-theme-target="bt" class="peer hidden">
+				<label for="bt" class="border inline-block w-max h-max rounded-md peer-checked:outline-blue-500 peer-checked:outline-2 outline outline-0">
+					<%= image_tag '/images/bt.svg', class: 'w-[100px] overflow-hidden rounded-[5px]' %>
+				</label>
+			</div>
+			<div class="mr-3">
+				<input type="radio" id="si" name="theme" data-action="change->theme#update" data-theme-target="si" class="peer hidden">
+				<label for="si" class="border inline-block w-max h-max rounded-md peer-checked:outline-blue-500 peer-checked:outline-2 outline outline-0">
+					<%= image_tag '/images/si.svg', class: 'w-[100px] overflow-hidden rounded-[5px]' %>
+				</label>
+			</div>
+			<input type="submit" data-action="click->theme#submit" value="Save" class="bg-<%= @config.find_by(key: 'accent')&.value %>-900 text-white rounded py-2 px-4 w-max inline-block" />
 		</div>
-		<div class="mr-3">
-			<label for="ro">Red-Orange</label>
-			<input type="radio" id="ro" name="theme" data-action="change->theme#update" data-theme-target="ro">
-		</div>
-		<div class="mr-3">
-			<label for="tb">Teal-Blue</label>
-			<input type="radio" id="tb" name="theme" data-action="change->theme#update" data-theme-target="tb">
-		</div>
-		<div class="mr-3">
-			<label for="ib">Indigo-Blue</label>
-			<input type="radio" id="ib" name="theme" data-action="change->theme#update" data-theme-target="ib">
-		</div>
-		<div class="mr-3">
-			<label for="bs">Blue-Slate</label>
-			<input type="radio" id="bs" name="theme" data-action="change->theme#update" data-theme-target="bs">
-		</div>
-		<div class="mr-3">
-			<label for="st">Slate-Indigo</label>
-			<input type="radio" id="si" name="theme" data-action="change->theme#update" data-theme-target="si">
-		</div>
-		<input type="submit" data-action="click->theme#submit" />
-	</div>
-	
-	<div class="absolute invisible">
-		<%= form_with model: @config.find_by(key: 'primary'), local: true, data: { 'theme-target' => 'primaryForm' } do |f| %>
-			<%= f.radio_button :value, 'red', data: { 'theme-target' => 'redPrimary' } %>
-			<%= f.radio_button :value, 'orange', data: { 'theme-target' => 'orangePrimary' } %>
-			<%= f.radio_button :value, 'teal', data: { 'theme-target' => 'tealPrimary' } %>
-			<%= f.radio_button :value, 'blue', data: { 'theme-target' => 'bluePrimary' } %>
-			<%= f.radio_button :value, 'indigo', data: { 'theme-target' => 'indigoPrimary' } %>
-			<%= f.radio_button :value, 'slate', data: { 'theme-target' => 'slatePrimary' } %>
-			<%= f.hidden_field :key, value: 'primary' %>
-			<%= f.submit 'Submit', class: 'inline-block' %>
-		<% end %>
-	</div>
 
-	<div class="absolute invisible">
-		<%= form_with model: @config.find_by(key: 'accent'), local: true, data: { 'theme-target' => 'accentForm' } do |f| %>
-			<%= f.radio_button :value, 'red', data: { 'theme-target' => 'redAccent' } %>
-			<%= f.radio_button :value, 'orange', data: { 'theme-target' => 'orangeAccent' } %>
-			<%= f.radio_button :value, 'teal', data: { 'theme-target' => 'tealAccent' } %>
-			<%= f.radio_button :value, 'blue', data: { 'theme-target' => 'blueAccent' } %>
-			<%= f.radio_button :value, 'indigo', data: { 'theme-target' => 'indigoAccent' } %>
-			<%= f.radio_button :value, 'slate', data: { 'theme-target' => 'slateAccent' } %>
-			<%= f.hidden_field :key, value: 'accent' %>
-			<%= f.submit 'Submit', class: 'inline-block' %>
-		<% end %>
+		<div class="absolute invisible">
+			<%= form_with model: @config.find_by(key: 'primary'), local: true, data: { 'theme-target' => 'primaryForm' } do |f| %>
+				<%= f.radio_button :value, 'red', data: { 'theme-target' => 'redPrimary' } %>
+				<%= f.radio_button :value, 'orange', data: { 'theme-target' => 'orangePrimary' } %>
+				<%= f.radio_button :value, 'teal', data: { 'theme-target' => 'tealPrimary' } %>
+				<%= f.radio_button :value, 'blue', data: { 'theme-target' => 'bluePrimary' } %>
+				<%= f.radio_button :value, 'indigo', data: { 'theme-target' => 'indigoPrimary' } %>
+				<%= f.radio_button :value, 'slate', data: { 'theme-target' => 'slatePrimary' } %>
+				<%= f.hidden_field :key, value: 'primary' %>
+				<%= f.submit 'Submit', class: 'inline-block' %>
+			<% end %>
+		</div>
+
+		<div class="absolute invisible">
+			<%= form_with model: @config.find_by(key: 'accent'), local: true, data: { 'theme-target' => 'accentForm' } do |f| %>
+				<%= f.radio_button :value, 'red', data: { 'theme-target' => 'redAccent' } %>
+				<%= f.radio_button :value, 'orange', data: { 'theme-target' => 'orangeAccent' } %>
+				<%= f.radio_button :value, 'teal', data: { 'theme-target' => 'tealAccent' } %>
+				<%= f.radio_button :value, 'blue', data: { 'theme-target' => 'blueAccent' } %>
+				<%= f.radio_button :value, 'indigo', data: { 'theme-target' => 'indigoAccent' } %>
+				<%= f.radio_button :value, 'slate', data: { 'theme-target' => 'slateAccent' } %>
+				<%= f.hidden_field :key, value: 'accent' %>
+				<%= f.submit 'Submit', class: 'inline-block' %>
+			<% end %>
+		</div>
 	</div>
 </div>

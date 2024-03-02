@@ -19,6 +19,7 @@
 			<legend>Log Hours Using</legend>
 			<%= f.label :auto_date, 'Start and End Times', :value => 'true' %>
 			<%= f.radio_button :auto_date, true, class: 'ml-2 mr-4', data: { action: 'edit-form#option1', 'edit-form-target' => 'radio1' }, checked: @hour.persisted? %>
+			<br class="sm:hidden" />
 			<%= f.label :auto_date, 'Time Difference', :value => 'false' %>
 			<%= f.radio_button :auto_date, false, class: 'ml-2 mr-4', data: { action: 'edit-form#option2', 'edit-form-target' => 'radio2' } %>
 			<div data-edit-form-target="option1">

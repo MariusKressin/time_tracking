@@ -18,7 +18,9 @@ class TopicsController < ApplicationController
   def update
     @topic = Topic.find(params[:id])
     @topic.assign_attributes(topic_params)
-    redirect_to @topic if @topic.save
+    return redirect_to @topic, notice: 'Topic saved!' if @topic.save
+
+    redirect_to edit_topic_path(@topic), alert: 'There was an error saving the topic.'
   end
 
   def new
@@ -28,17 +30,19 @@ class TopicsController < ApplicationController
   def create
     @topic = Topic.new
     @topic.assign_attributes(topic_params)
-    redirect_to @topic if @topic.save
+    return redirect_to @topic, notice: 'Topic created!' if @topic.save
+
+    redirect_to new_topic_path, alert: 'There was an error saving the topic.'
   end
 
   def destroy
     @topic = Topic.find(params[:id])
-    @topic.destroy
-    redirect_to '/topics'
+    return redirect_to '/topics', notice: 'Topic deleted.' if @topic.destroy
+
+    redirect_to '/topics', alert: 'There was an error deleting the topic.'
   end
 
   def rate_in_dollars
-    puts 'Hi!!!!\n\n\n\n\n\n'
     '%.2f' % (rate / 100.0)
   end
 

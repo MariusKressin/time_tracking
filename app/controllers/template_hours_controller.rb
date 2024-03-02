@@ -10,7 +10,9 @@ class TemplateHoursController < ApplicationController
     @template_hour = TemplateHour.new
     @template_hour.assign_attributes(template_hour_params)
     @template_hour.template_id = params[:template_id]
-    redirect_to @template_hour.template if @template_hour.save
+    return redirect_to @template_hour.template, notice: 'Hour template created!' if @template_hour.save
+
+    redirect_to "/template/#{params[:template_id]}", alert: 'There was an error creating the hour template.'
   end
 
   def edit
@@ -21,13 +23,17 @@ class TemplateHoursController < ApplicationController
   def update
     @template_hour = TemplateHour.find(params[:id])
     @template_hour.assign_attributes(template_hour_params)
-    redirect_to @template_hour.template if @template_hour.save
+    return redirect_to @template_hour.template, notice: 'Hour template saved!' if @template_hour.save
+
+    redirect_to @template_hour.template, alert: 'There was an error saving the hour template.'
   end
 
   def destroy
     @template_hour = TemplateHour.find(params[:id])
     @template = @template_hour.template
-    redirect_to @template if @template_hour.destroy
+    return redirect_to @template, notice: 'Hour template deleted!' if @template_hour.destroy
+
+    redirect_to @template, alert: 'There was an error deleting the hour template.'
   end
 
   private

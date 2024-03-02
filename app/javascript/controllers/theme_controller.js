@@ -3,8 +3,24 @@ import { Controller } from '@hotwired/stimulus';
 export default class extends Controller {
 		static targets = [ 'redPrimary', 'orangePrimary', 'tealPrimary', 'bluePrimary', 'indigoPrimary', 'slatePrimary',
 											 'redAccent', 'orangeAccent', 'tealAccent', 'blueAccent', 'indigoAccent', 'slateAccent',
-											 'ri', 'ro', 'tb', 'ib', 'bs', 'si',
+											 'ri', 'ro', 'tb', 'ib', 'bt', 'si',
 											 'primaryForm', 'accentForm' ];
+
+		connect() {
+				if (this.redPrimaryTarget.checked && this.indigoAccentTarget.checked) {
+						this.riTarget.checked = true;
+				} else if (this.redPrimaryTarget.checked && this.orangeAccentTarget.checked) {
+						this.roTarget.checked = true;
+				} else if (this.tealPrimaryTarget.checked && this.blueAccentTarget.checked) {
+						this.tbTarget.checked = true;
+				} else if (this.indigoPrimaryTarget.checked && this.blueAccentTarget.checked) {
+						this.ibTarget.checked = true;
+				} else if (this.bluePrimaryTarget.checked && this.tealAccentTarget.checked) {
+						this.btTarget.checked = true;
+				} else if (this.slatePrimaryTarget.checked && this.indigoAccentTarget.checked) {
+						this.siTarget.checked = true;
+				}
+		}
 
 		update() {
 				if (this.riTarget.checked) {
@@ -23,10 +39,10 @@ export default class extends Controller {
 						this.clearOptions();
 						this.indigoPrimaryTarget.checked = true;
 						this.blueAccentTarget.checked = true;
-				} else if (this.bsTarget.checked) {
+				} else if (this.btTarget.checked) {
 						this.clearOptions();
 						this.bluePrimaryTarget.checked = true;
-						this.slateAccentTarget.checked = true;
+						this.tealAccentTarget.checked = true;
 				} else if (this.siTarget.checked) {
 						this.clearOptions();
 						this.slatePrimaryTarget.checked = true;

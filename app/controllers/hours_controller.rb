@@ -15,7 +15,7 @@ class HoursController < ApplicationController
   def update
     @hour = Hour.find(params[:id])
     @hour.assign_attributes(hour_params)
-    redirect_to @hour if @hour.save
+    redirect_to @hour, notice: 'Time saved!' if @hour.save
   end
 
   def new
@@ -26,13 +26,12 @@ class HoursController < ApplicationController
   def create
     @hour = Hour.new
     @hour.assign_attributes(hour_params)
-    redirect_to @hour if @hour.save
+    redirect_to @hour, notice: 'Hours logged!' if @hour.save
   end
 
   def destroy
     @hour = Hour.find(params[:id])
-    @hour.destroy
-    redirect_to '/hours'
+    redirect_to '/hours', notice: 'Hours deleted.' if @hour.destroy
   end
 
   def show

@@ -17,7 +17,7 @@ export default class extends Controller {
 				this.snackbarTarget.classList.remove('translate-y-10');
 				this.snackbarTarget.classList.remove('opacity-0');
 				this.contentTarget.innerHTML = content || '';
-				this.timeoutQueue.push(window.setTimeout(this.close.bind(this), 7000));
+				this.timeoutQueue.push(window.setTimeout(this.close.bind(this), 5000));
 		}
 
 		alert(content) {

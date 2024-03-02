@@ -12,7 +12,9 @@ class TemplatesController < ApplicationController
   def create
     @template = Template.new
     @template.assign_attributes(template_params)
-    redirect_to @template if @template.save
+    return redirect_to @template, notice: 'Template created!' if @template.save
+
+    redirect_to '/templates/new', alert: 'There was an error creating the template.'
   end
 
   def edit
@@ -22,7 +24,9 @@ class TemplatesController < ApplicationController
   def update
     @template = Template.find(params[:id])
     @template.assign_attributes(template_params)
-    redirect_to @template if @template.save
+    return redirect_to @template, notice: 'Template saved!' if @template.save
+
+    redirect_to edit_template_path(@template), alert: 'There was an error saving the template.'
   end
 
   def show
@@ -31,7 +35,9 @@ class TemplatesController < ApplicationController
 
   def destroy
     @template = Template.find(params[:id])
-    redirect_to '/templates', notice: 'Template deleted.' if @template.destroy
+    return redirect_to '/templates', notice: 'Template deleted.' if @template.destroy
+
+    redirect_to @template, alert: 'There was an error deleting the template.'
   end
 
   def add_to_hours
@@ -46,7 +52,9 @@ class TemplatesController < ApplicationController
       hour.long_desc = "From #{@template.title}"
       failure = true unless hour.save
     end
-    redirect_to '/hours' unless failure
+    return redirect_to '/hours', notice: 'Hours logged!' unless failure
+
+    redirect_to @template, alert: 'There was an error logging the hours.'
   end
 
   private
