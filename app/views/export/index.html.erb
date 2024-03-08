@@ -1,1 +1,11 @@
 <div class="text-xl">Export</div>
+<div class="mt-2">
+	<a href="/export/csv" class="rounded bg-<%= @config['primary'] %>-900 text-white font-bold p-2 px-4 block w-max mr-2 mb-2">
+		<%= heroicon 'arrow-up', options: { class: 'inline-block' } %>
+		Export as CSV
+	</a>
+	<a href="/export/pdf" class="rounded bg-<%= @config['primary'] %>-900 text-white font-bold p-2 px-4 block w-max">
+		<%= heroicon 'arrow-up', options: { class: 'inline-block' } %>
+		Export as PDF
+	</a>
+</div>

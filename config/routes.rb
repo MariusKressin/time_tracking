@@ -27,4 +27,6 @@ Rails.application.routes.draw do
 
   # Export
   get '/export', to: 'export#index'
+  get '/export/csv', to: 'export#csv'
+  get '/export/pdf', to: 'export#pdf'
 end
