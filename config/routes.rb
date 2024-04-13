@@ -3,7 +3,9 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
-  get '/', to: 'home#index'
+  root 'home#index'
+
+  get '/hours/clear', to: 'hours#clear', as: 'clear_hours'
   resources :hours
   resources :topics
   resources :templates
@@ -26,7 +28,7 @@ Rails.application.routes.draw do
   patch '/settings', to: 'settings#update'
 
   # Export
-  get '/export', to: 'export#index'
-  get '/export/csv', to: 'export#csv'
-  get '/export/pdf', to: 'export#pdf'
+  get '/export/html', to: 'hours#html', layout: 'pdf'
+  get '/export/csv', to: 'hours#csv', as: 'export_csv'
+  get '/export/pdf', to: 'hours#pdf', as: 'export_pdf'
 end

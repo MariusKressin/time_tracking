@@ -17,6 +17,7 @@
 		<%= f.select :topic_id, @topics.map{ |topic| [topic.name, topic.id] }, { prompt: 'Choose...' }, { class: 'rounded mb-2' } %>
 		<fieldset class="border border-black rounded px-5 pb-4 pt-1 mb-3" data-controller="edit-form">
 			<legend>Log Hours Using</legend>
+			<div class="hidden" data-edit-form-target="minuteValue"><%= @minutes %></div>
 			<%= f.label :auto_date, 'Start and End Times', :value => 'true' %>
 			<%= f.radio_button :auto_date, true, class: 'ml-2 mr-4', data: { action: 'edit-form#option1', 'edit-form-target' => 'radio1' }, checked: @hour.persisted? %>
 			<br class="sm:hidden" />

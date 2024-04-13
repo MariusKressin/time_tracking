@@ -1,0 +1,40 @@
+import { Controller } from '@hotwired/stimulus';
+
+export default class extends Controller {
+		static targets = ['mhand', 'hhand', 'label', 'minutes', 'submit'];
+		active = false;
+		interval = null;
+
+		activate() {
+				this.active = !this.active;
+				if (this.active) {
+						this.startLogging();
+				} else {
+						this.save();
+						this.endLogging();
+				}
+		}
+
+		startLogging() {
+				this.labelTarget.innerText = 'Clock Out';
+				this.interval = window.setInterval((() => {
+						this.minutesTarget.value ++;
+						console.log('minutes ++!');
+				}).bind(this), 60000);
+				this.mhandTarget.classList.add('animate-spin');
+				this.hhandTarget.classList.add('animate-slowspin');
+		}
+
+		endLogging() {
+				this.labelTarget.innerText = 'Clock In';
+				window.clearInterval(this.interval);
+				this.interval = null;
+				this.mhandTarget.classList.remove('animate-spin');
+				this.hhandTarget.classList.remove('animate-slowspin');
+		}
+
+		async save() {
+				// Redirect to new Hours page with autofill data.
+				await fetch('/hours/new', { method: 'POST', body: JSON.stringify({ minutes: this.minutesTarget.value }) });
+		}
+}

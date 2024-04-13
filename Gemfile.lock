@@ -81,6 +81,9 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
+    combine_pdf (1.0.26)
+      matrix
+      ruby-rc4 (>= 0.1.5)
     concurrent-ruby (1.2.2)
     crass (1.0.6)
     date (3.3.3)
@@ -90,6 +93,9 @@ GEM
     erubi (1.12.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    grover (1.1.6)
+      combine_pdf (~> 1.0)
+      nokogiri (~> 1.0)
     heroicon (1.0.0)
       rails (>= 5.2)
     i18n (1.14.1)
@@ -175,6 +181,7 @@ GEM
     reline (0.3.9)
       io-console (~> 0.5)
     rexml (3.2.6)
+    ruby-rc4 (0.1.5)
     rubyzip (2.3.2)
     selenium-webdriver (4.10.0)
       rexml (~> 3.2, >= 3.2.5)
@@ -225,6 +232,7 @@ DEPENDENCIES
   bootsnap
   capybara
   debug
+  grover
   heroicon
   importmap-rails
   jbuilder

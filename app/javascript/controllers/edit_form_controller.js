@@ -1,12 +1,17 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-		static targets = [ 'radio1', 'radio2', 'option1', 'option2', 'hours', 'minutes', 'start', 'end' ];
+		static targets = [ 'radio1', 'radio2', 'option1', 'option2', 'hours', 'minutes', 'start', 'end', 'minuteValue' ];
 
 		connect() {
 				if (this.radio2Target.checked) this.option2();
 				else this.option1();
-				this.updateDiff();
+				if (this.minuteValueTarget.innerText != -1) {
+						this.hoursTarget.value = Math.floor(parseFloat(this.minuteValueTarget.innerText) / 60);
+						this.minutesTarget.value = Math.floor(parseFloat(this.minuteValueTarget.innerText) % 60);
+						this.radio1Target.checked = true;
+						this.updateTime();
+				} else this.updateDiff();
 		}
 
 		option1() {

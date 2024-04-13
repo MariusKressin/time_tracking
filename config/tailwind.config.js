@@ -1,4 +1,4 @@
-const defaultTheme = require('tailwindcss/defaultTheme')
+const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
   content: [
@@ -39,6 +39,7 @@ module.exports = {
       },
       animation: {
         wiggle: 'wobble 1s linear infinite',
+        slowspin: 'spin 6s linear infinite',
       },
     },
   },
@@ -47,5 +48,5 @@ module.exports = {
     require('@tailwindcss/aspect-ratio'),
     require('@tailwindcss/typography'),
     require('@tailwindcss/container-queries'),
-  ]
+	]
 }

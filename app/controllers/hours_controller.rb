@@ -1,5 +1,6 @@
 # frozen_string_literal:true
 
+require 'csv'
 class HoursController < ApplicationController
   before_action :set_config
 
@@ -18,9 +19,21 @@ class HoursController < ApplicationController
     redirect_to @hour, notice: 'Time saved!' if @hour.save
   end
 
+  def clear
+    hours = Hour.all
+    failure = false
+    hours.each do |h|
+      failure = true unless h.destroy
+      h.destroy
+    end
+    redirect_to '/hours', notice: 'Hours cleared!' unless failure
+    redirect_to '/hours', alert: 'There was an error clearing the hours.' if failure
+  end
+
   def new
     @hour = Hour.new
     @topics = Topic.all
+    @minutes = params[:minutes].to_i || -1
   end
 
   def create
@@ -38,6 +51,32 @@ class HoursController < ApplicationController
     @hour = Hour.find(params[:id])
   end
 
+  def html
+    @topics = Topic.all
+    @totals = totals
+    render 'export/html', layout: 'pdf'
+  end
+
+  def pdf
+    set_config
+    html = HoursController
+           .new
+           .render_to_string({
+                               template: '/export/html',
+                               layout: 'pdf',
+                               locals: {
+                                 :@config => @config,
+                                 :@topics => Topic.all,
+                                 :@totals => totals
+                               }
+                             })
+    send_data Grover.new(html).to_pdf, filename: "hours-pdf-#{Time.now.strftime('%m-%d-%Y')}", type: 'application/pdf'
+  end
+
+  def csv
+    send_data to_csv, filename: "hours-export-#{Time.now.strftime('%m-%d-%Y')}", type: 'text/csv'
+  end
+
   private
 
   def hour_params
@@ -49,6 +88,47 @@ class HoursController < ApplicationController
 
     Config.all.each do |c|
       @config[c.key] = c.value
+    end
+  end
+
+  def totals
+    topic_totals = {}
+    Topic.all.each do |t|
+      money = 0
+      time = 0
+      t.hours.each do |h|
+        money += ((h.end - h.begin) * h.topic.rate / 360_000.0)
+        time += (h.end - h.begin) / 1.hour
+      end
+      topic_totals[t] = { topic_id: t.id, money:, rate: t.rate, time: }
+    end
+    topic_totals
+  end
+
+  def to_csv
+    sorted_hours = Hour.all.to_a.sort_by(&:begin)
+    CSV.generate do |csv|
+      csv << %w[Date Topic Description Time Value Rate]
+      sorted_hours.each do |h|
+        csv << [
+          h.begin.strftime('%m/%d/%y'),
+          h.topic.name, h.short_desc,
+          "#{'%0.2f' % ((h.end - h.begin) / 1.hour)} hours",
+          "$#{'%0.2f' % (h.topic.rate / 100.0)}",
+          "$#{'%0.2f' %((h.end - h.begin) * h.topic.rate / 360_000.0)}"
+        ]
+      end
+      csv << ['---', '---', '---', '---', '---', '---']
+      totals.each do |t|
+        csv << [
+          'Total:',
+          t[0].name,
+          '',
+          "#{'%0.2f' % (t[1][:time])} hours",
+          "$#{'%0.2f' % (t[1][:rate] / 100.0)}",
+          "$#{'%0.2f' % (t[1][:time] * t[1][:rate] / 100.0)}"
+        ]
+      end
     end
   end
 end

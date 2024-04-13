@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<style>
+		body {
+				background-color: white;
+				margin: 2rem 4rem;
+		}
+
+		.grid {
+				display: grid;
+		}
+
+		.gc-5 {
+				grid-template-columns: repeat(5, auto);
+		}
+
+		.w-100 {
+				width: 100%;
+		}
+
+		.all-grey * {
+				color: #444;
+		}
+
+		.all-padding * {
+				padding: 5px;
+		}
+
+		.border {
+				border: 1px solid black;
+		}
+	</style>
+	<body>
+		<%= yield %>
+	</body>
+</html>
