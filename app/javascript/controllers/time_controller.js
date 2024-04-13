@@ -14,12 +14,12 @@ export default class extends Controller {
 						const diff = now - begin;
 						if (diff > 61200000) return;
 						this.minutes = Math.floor(diff / 6000) / 10;
-						this.clockoutTarget.href = `/hours/new?minutes=${this.minutes}`;
+						this.clockoutTarget.href = `/hours/new?minutes=${Math.round(this.minutes)}`;
 						this.activate();
 				}
 		}
 
-		activate() {
+		activate(e) {
 				if (!this.minutes) this.save();
 				this.clockinTarget.classList.toggle('hidden');
 				this.clockoutTarget.classList.toggle('hidden');
@@ -28,23 +28,23 @@ export default class extends Controller {
 						this.listener = window.addEventListener('beforeunload', this.alert);
 						this.startLogging();
 				} else {
+						this.endLogging(e);
 						window.removeEventListener('beforeunload', this.listener);
-						this.endLogging();
 				}
 		}
 
 		startLogging() {
 				this.interval = window.setInterval((() => {
 						this.minutes += 0.1;
-						const strmin = Math.floor(this.minutes*10).toString().split('');
-						strmin.splice(-1, 0, '.');
-						this.clockoutTarget.href = `/hours/new?minutes=${strmin.join('')}`;
+						this.clockoutTarget.href = `/hours/new?minutes=${Math.round(this.minutes)}`;
+						if (this.minutes < 1) this.clockoutTarget.href = '/hours/new';
 				}).bind(this), 6000);
 				this.mhandTarget.classList.add('animate-spin');
 				this.hhandTarget.classList.add('animate-slowspin');
 		}
 
-		endLogging() {
+		endLogging(e) {
+				if (this.minutes < 1) e.preventDefault();
 				if (!this.active) localStorage.removeItem('beginning');
 				window.clearInterval(this.interval);
 				this.interval = null;
