@@ -57,7 +57,7 @@
 					<%= button_to 'Delete', "/templates/#{@template.id}/hours/#{hour.id}", method: :delete, class:'block px-5 transition ease font-semibold hover:bg-slate-200 py-2' %>
 				</div>
 			</div>
-			<div class="grow ml-3 ellipsis"><span class="text-slate-600"><%= hour.topic.name %> | </span><span class="ellipsis"><%= hour.hours %> hr <%= hour.minutes %> min</span></div>
+			<div class="grow ml-3 ellipsis"><span class="text-slate-600"><%= hour.topic.name %> | </span><span class="ellipsis"><%= hour.hours + (((hour.minutes / 3.0).floor) / (hour.minutes != 0 ? 20.0 : 1)) %> hour<%= ((hour.hours == 1) && (hour.minutes == 0)) ? '' : 's' %></span></div>
 		</div>
 	</div>
 <% end %>

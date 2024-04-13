@@ -98,7 +98,7 @@ class HoursController < ApplicationController
       time = 0
       t.hours.each do |h|
         money += ((h.end - h.begin) * h.topic.rate / 360_000.0)
-        time += (h.end - h.begin) / 1.hour
+        time += ((h.end - h.begin) * 20 / 1.hour).floor / 20.0
       end
       topic_totals[t] = { topic_id: t.id, money:, rate: t.rate, time: }
     end
@@ -113,9 +113,9 @@ class HoursController < ApplicationController
         csv << [
           h.begin.strftime('%m/%d/%y'),
           h.topic.name, h.short_desc,
-          "#{'%0.2f' % ((h.end - h.begin) / 1.hour)} hours",
+          "#{'%0.2f' % (((h.end - h.begin) * 20 / 1.hour).floor / 20.0)} hours",
           "$#{'%0.2f' % (h.topic.rate / 100.0)}",
-          "$#{'%0.2f' %((h.end - h.begin) * h.topic.rate / 360_000.0)}"
+          "$#{'%0.2f' % ((h.end - h.begin) * h.topic.rate / 360_000.0)}"
         ]
       end
       csv << ['---', '---', '---', '---', '---', '---']

@@ -12,6 +12,7 @@ export default class extends Controller {
 						const now = new Date();
 						const begin = new Date(localStorage.getItem('beginning'));
 						const diff = now - begin;
+						if (diff > 61200000) return;
 						this.minutes = Math.floor(diff / 6000) / 10;
 						this.clockoutTarget.href = `/hours/new?minutes=${this.minutes}`;
 						this.activate();

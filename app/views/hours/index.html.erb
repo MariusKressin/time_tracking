@@ -61,7 +61,7 @@
 				</div>
 			</div>
 			<div class="grow ml-3"><span class="text-slate-600 hidden sm:inline"><%= hour.topic.name %> | </span><span class="ellipsis"><%= hour.short_desc %></span></div>
-			<div class="mr-3 hidden sm:block"><%= ((hour.end - hour.begin)/1.hour).floor %> hr <%= ((hour.end - hour.begin)/1.minute % 60).floor %> min</div>
+			<div class="mr-3 hidden sm:block"><%= (((hour.end - hour.begin)*20/1.hour).floor) / 20.0 %> hours</div>
 			<%= link_to hour, class: 'rounded-full transition ease-in-out hover:bg-slate-300 p-2 block' do %>
 				<%= heroicon 'arrow-long-right', options: { class: 'w-5 h-5' } %>
 			<% end %>

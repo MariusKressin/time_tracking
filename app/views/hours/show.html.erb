@@ -34,7 +34,7 @@
 	<div class="font-bold">Topic</div>
 	<div><%= @hour.topic.name %></div>
 	<div class="font-bold">Time</div>
-	<div><%= ((@hour.end - @hour.begin)/1.hour).floor %> hr <%= ((@hour.end - @hour.begin)/1.minute % 60).floor %> min</div>
+	<div><%= (((@hour.end - @hour.begin)*20/1.hour).floor) / 20.0 %> hours</div>
 	<div class
 ="font-bold">Date</div>
 	<div><%= @hour.begin.strftime('%m/%d/%y') %></div>
