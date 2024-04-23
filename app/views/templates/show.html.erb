@@ -7,11 +7,13 @@
 	<div class="grow text-lg sm:text-xl">
 		<%= @template.title %>
 	</div>
-	<%= button_to @template, class:'hidden sm:block', method: :delete do %>
-		<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline-block w-12 h-12 p-3 transition rounded-full ease-in-out hover:bg-slate-200">
-			<path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-		</svg>
-	<% end %>
+	<div data-controller="dialog">
+		<%= button_to @template, class:'hidden sm:block', data: { action: 'click->dialog#confirm' }, method: :delete do %>
+			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline-block w-12 h-12 p-3 transition rounded-full ease-in-out hover:bg-slate-200">
+				<path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+			</svg>
+		<% end %>
+	</div>
 	<a href="/templates/<%= @template.id %>/edit" class="hidden sm:block">
 		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="inline-block w-12 h-12 p-3 transition rounded-full ease-out hover:bg-slate-200">
 			<path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z" />
@@ -21,9 +23,9 @@
 		<div data-action="click->menu#toggle" class="rounded-full sm:p-2 p-1 transition ease-out hover:bg-slate-300">
 			<%= heroicon 'ellipsis-vertical', options: { class: 'sm:w-6 sm:h-6 w-5 h-5' } %>
 		</div>
-		<div class="rounded-md bg-white absolute shadow-md py-1 invisible opacity-0 -translate-y-2 transition ease-in-out right-6" data-menu-target="menu">
+		<div class="rounded-md bg-white absolute shadow-md py-1 invisible opacity-0 -translate-y-2 transition ease-in-out right-6" data-menu-target="menu" data-controller="dialog">
 			<%= link_to 'Edit', edit_template_path(@template), class:'block px-5 transition ease font-semibold hover:bg-slate-200 py-2' %>
-			<%= button_to 'Delete', @template, method: :delete, class:'block px-5 transition ease font-semibold hover:bg-slate-200 py-2' %>
+			<%= button_to 'Delete', @template, method: :delete, class:'block px-5 transition ease font-semibold hover:bg-slate-200 py-2', data: { action: 'click->dialog#confirm' } %>
 		</div>
 	</div>
 </div>
@@ -34,7 +36,7 @@
 <div class="flex items-center">
 	<div class="text-lg grow">Hours</div>
 	<%= button_to "/templates/#{@template.id}/add_to_hours", method: :post, class: "flex bg-#{@config['accent']}-800 rounded-full sm:rounded text-white items-center font-bold p-2 sm:px-3 sm:pr-5 mr-2" do %>
-		<%= heroicon 'clock', options: { class: 'sm:mr-2' } %>
+		<%= heroicon 'arrow-up-circle', options: { class: 'sm:mr-2' } %>
 		<div class="hidden sm:block">Add to Hours</div>
 	<% end %>
 	<a href="/templates/<%= @template.id %>/hours/new" class="flex bg-<%= @config['primary'] %>-800 rounded-full sm:rounded text-white items-center font-bold p-2 sm:px-3 sm:pr-5">
@@ -57,7 +59,7 @@
 					<%= button_to 'Delete', "/templates/#{@template.id}/hours/#{hour.id}", method: :delete, class:'block px-5 transition ease font-semibold hover:bg-slate-200 py-2' %>
 				</div>
 			</div>
-			<div class="grow ml-3 ellipsis"><span class="text-slate-600"><%= hour.topic.name %> | </span><span class="ellipsis"><%= hour.hours + (((hour.minutes / 3.0).floor) / (hour.minutes != 0 ? 20.0 : 1)) %> hour<%= ((hour.hours == 1) && (hour.minutes == 0)) ? '' : 's' %></span></div>
+			<div class="grow ml-3 ellipsis"><span class="text-slate-600"><%= hour.topic.name %><span class="hidden sm:inline"> | </span><div class="sm:hidden"></div></span><span class="ellipsis"><%= hour.hours + (((hour.minutes / 3.0).floor) / (hour.minutes != 0 ? 20.0 : 1)) %> hour<%= ((hour.hours == 1) && (hour.minutes == 0)) ? '' : 's' %></span></div>
 		</div>
 	</div>
 <% end %>

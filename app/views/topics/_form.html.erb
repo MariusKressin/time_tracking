@@ -18,14 +18,14 @@
 				field: :rate,
 		} %>
 		<div class="flex">
-			<div class="py-2 px-4 bg-<%= @config['primary'] %>-800 rounded text-white w-max">
+			<div class="py-2 px-4 bg-<%= @config['accent'] %>-800 rounded text-white w-max">
 				<% if @topic.persisted? %>
 					<%= f.submit "Save" %>
 				<% else %>
 					<%= f.submit "Create" %>
 				<% end %>
 			</div>
-			<div class="py-2 px-4 border border-<%= @config['primary'] %>-800 rounded w-max ml-2 text-<%= @config['primary'] %>-800">
+			<div class="py-2 px-4 border border-<%= @config['accent'] %>-800 rounded w-max ml-2 text-<%= @config['accent'] %>-800">
 				<% if @topic.persisted? %>
 					<%= link_to "Cancel", @topic %>
 				<% else %>

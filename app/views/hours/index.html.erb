@@ -1,8 +1,14 @@
 <div class="flex items-center">
 	<div class="grow text-xl">Hours</div>
+	<%= button_to clear_hours_path, method: :post, class: "hidden sm:flex items-center rounded-full bg-red-600 font-bold text-white p-2 lg:px-4 mx-4 lg:rounded", data: { controller: 'dialog', action: 'click->dialog#confirm' } do %>
+		<%= heroicon 'trash' %>
+		<div class="hidden lg:block ml-2">
+			Clear
+		</div>
+	<% end %>
 	<div data-controller="extend" class="relative" tabindex="0" data-action="blur->extend#close">
-		<div data-action="click->extend#toggle" class="rounded-full md:rounded p-2 md:px-4 transition ease-out flex items-center bg-slate-200 hover:bg-slate-300">
-			<div class="hidden md:inline-block mr-2">
+		<div data-action="click->extend#toggle" class="rounded-full lg:rounded p-2 lg:px-4 transition ease-out flex items-center bg-slate-200 hover:bg-slate-300">
+			<div class="hidden lg:inline-block mr-2">
 				Export
 			</div>
 			<%= heroicon 'chevron-down', options: { 'data-extend-target' => 'chevron', class: "transition ease-in-out" } %>
@@ -12,36 +18,36 @@
 			<%= link_to 'Export to CSV', export_csv_path, class:'w-full block px-5 transition ease font-semibold hover:bg-slate-200 py-2' %>
 		</div>
 	</div>
-	<a href="/hours/new" class="flex items-center rounded-full bg-slate-200 p-2 md:px-4 mx-4 md:rounded">
-		<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 md:mr-2 inline-block">
+	<a href="/hours/new" class="flex items-center rounded-full bg-slate-200 p-2 lg:px-4 mx-4 lg:rounded">
+		<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 lg:mr-2 inline-block">
 			<path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m3.75 9v6m3-3H9m1.5-12H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
 		</svg>
-		<div class="hidden md:block">
+		<div class="hidden lg:block">
 			Log Hours
 		</div>
 	</a>
-	<div data-controller="time" data-action="click->time#activate">
-		<div class="flex items-center rounded-full bg-<%= @config['primary'] %>-800 text-white font-bold p-2 md:px-4 md:rounded" data-time-target="clockin">
-			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="md:mr-2 w-6 h-6 inline-block">
+	<div data-controller="time" data-action="click->snackbar#toggle click->time#activate">
+		<div class="flex items-center rounded-full bg-<%= @config['accent'] %>-800 text-white font-bold p-2 lg:px-4 lg:rounded relative" data-time-target="clockin">
+			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="lg:mr-2 w-6 h-6 inline-block">
 				<path stroke-linecap="round" stroke-linejoin="round" d="M12 6m0 6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
 			</svg>
 			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 inline-block absolute">
 				<path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6"/>
 			</svg>
-			<div class="hidden md:block">
-				Clock In
+			<div class="hidden lg:block">
+				Start Timer
 			</div>
 			<input class="hidden" type="number" data-time-target="minutes" />
 		</div>
-		<%= link_to new_hour_path, class: "hidden flex items-center rounded-full bg-#{@config['primary']}-800 text-white font-bold p-2 md:px-4 md:rounded", data: { 'time-target' => 'clockout' } do %>
-			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="md:mr-2 w-6 h-6 inline-block" data-time-target="hhand">
+		<%= link_to new_hour_path, class: "hidden flex items-center rounded-full bg-#{@config['accent']}-800 text-white font-bold p-2 lg:px-4 lg:rounded relative", data: { 'time-target' => 'clockout' } do %>
+			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="lg:mr-2 w-6 h-6 inline-block" data-time-target="hhand">
 				<path stroke-linecap="round" stroke-linejoin="round" d="M12 6m0 6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
 			</svg>
 			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 inline-block absolute" data-time-target="mhand">
 				<path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6"/>
 			</svg>
-			<div class="hidden md:block">
-				Clock Out
+			<div class="hidden lg:block">
+				Stop Timer
 			</div>
 			<input class="hidden" type="number" data-time-target="minutes" />
 		<% end %>
@@ -55,7 +61,7 @@
 				<div data-action="click->menu#toggle" class="rounded-full p-2 transition ease-out hover:bg-slate-300">
 					<%= heroicon 'ellipsis-vertical' %>
 				</div>
-				<div class="rounded-md bg-white absolute shadow-md py-1 invisible opacity-0 -translate-y-2 transition ease-in-out z-10" data-menu-target="menu">
+				<div class="rounded-md bg-white absolute shadow-md py-1 invisible opacity-0 -translate-y-2 transition ease-in-out z-10" data-menu-target="menu" data-controller="dialog">
 					<%= link_to 'Edit', edit_hour_path(hour), class:'block px-5 transition ease font-semibold hover:bg-slate-200 py-2' %>
 					<%= button_to 'Delete', hour, method: :delete, class:'block px-5 transition ease font-semibold hover:bg-slate-200 py-2' %>
 				</div>

@@ -3,6 +3,7 @@
     "cosmiconfig": "^9.0.0",
     "grover": "^0.0.18",
     "puppeteer": "^22.4.1",
-    "puppeteer-core": "^22.4.1"
+    "puppeteer-core": "^22.4.1",
+    "sweetalert2": "^11.10.8"
   }
 }

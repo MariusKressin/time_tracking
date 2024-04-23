@@ -1,7 +1,7 @@
 import { Controller } from '@hotwired/stimulus';
 
 export default class extends Controller {
-		static targets = [ 'snackbar', 'content', 'notice', 'alert', 'color' ];
+		static targets = [ 'snackbar', 'content', 'notice', 'alert', 'color', 'mhand', 'hhand' ];
 		timeoutQueue = [];
 
 		connect() {
@@ -9,6 +9,9 @@ export default class extends Controller {
 						this.alert(this.alertTarget.innerHTML);
 				} else if (this.noticeTarget.innerHTML) {
 						this.open(this.noticeTarget.innerHTML);
+				}
+				if (localStorage.getItem('beginning')) {
+						this.spin();
 				}
 		}
 
@@ -36,5 +39,15 @@ export default class extends Controller {
 				for (let q of this.timeoutQueue) {
 						window.clearTimeout(q);
 				}
+		}
+
+		spin() {
+				this.mhandTarget.classList.add('animate-spin');
+				this.hhandTarget.classList.add('animate-slowspin');
+		}
+
+		toggle() {
+				this.mhandTarget.classList.toggle('animate-spin');
+				this.hhandTarget.classList.toggle('animate-slowspin');
 		}
 }

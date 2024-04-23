@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   # root "articles#index"
   root 'home#index'
 
-  get '/hours/clear', to: 'hours#clear', as: 'clear_hours'
+  post '/hours/clear', to: 'hours#clear', as: 'clear_hours'
   resources :hours
   resources :topics
   resources :templates
