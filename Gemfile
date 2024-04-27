@@ -79,3 +79,9 @@ group :test do
   gem 'selenium-webdriver'
   gem 'webdrivers'
 end
+
+gem "devise", "~> 4.9"
+
+gem "letter_opener", "~> 1.10"
+
+gem "bcrypt", "~> 3.1"
