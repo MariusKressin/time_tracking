@@ -21,6 +21,10 @@
     <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'w-full rounded outline-none' %>
   </div>
 
+	<%= f.hidden_field :primary_color, :value => 'slate' %>
+	<%= f.hidden_field :accent_color, :value => 'indigo' %>
+	<%= f.hidden_field :scheme, :value => 'si' %>
+
   <div class="actions p-2 mt-2 text-white text-center bg-indigo-800 rounded transition ease hover:bg-indigo-700">
     <%= f.submit "Sign up" %>
   </div>
