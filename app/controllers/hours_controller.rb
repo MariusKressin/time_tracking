@@ -2,29 +2,28 @@
 
 require 'csv'
 class HoursController < ApplicationController
-  before_action :set_config
-
   def index
-    @hours = Hour.all
+    @hours = Hour.where(user_id: current_user.id)
   end
 
   def edit
     @hour = Hour.find(params[:id])
+    redirect_to '/hours', alert: "You aren't allowed to view that!" if @hour.user_id != current_user.id
     @topics = Topic.all
   end
 
   def update
     @hour = Hour.find(params[:id])
+    redirect_to '/hours', alert: "You aren't allowed to do that!" if @hour.user_id != current_user.id
     @hour.assign_attributes(hour_params)
     redirect_to @hour, notice: 'Time saved!' if @hour.save
   end
 
   def clear
-    hours = Hour.all
+    hours = Hour.where(user_id: current_user.id)
     failure = false
     hours.each do |h|
       failure = true unless h.destroy
-      h.destroy
     end
     redirect_to '/hours', notice: 'Hours cleared!' unless failure
     redirect_to '/hours', alert: 'There was an error clearing the hours.' if failure
@@ -32,7 +31,7 @@ class HoursController < ApplicationController
 
   def new
     @hour = Hour.new
-    @topics = Topic.all
+    @topics = Topic.where(user_id: current_user.id)
     @minutes = params[:minutes].to_i || -1
   end
 
@@ -44,28 +43,28 @@ class HoursController < ApplicationController
 
   def destroy
     @hour = Hour.find(params[:id])
+    redirect_to '/hours', alert: "You aren't allowed to do that!" if @hour.user_id != current_user.id
     redirect_to '/hours', notice: 'Hours deleted.' if @hour.destroy
   end
 
   def show
     @hour = Hour.find(params[:id])
+    redirect_to '/hours', alert: "You aren't allowed to view that!" if @hour.user_id != current_user.id
   end
 
   def html
-    @topics = Topic.all
+    @topics = Topic.where(user_id: current_user.id)
     @totals = totals
     render 'export/html', layout: 'pdf'
   end
 
   def pdf
-    set_config
     html = HoursController
            .new
            .render_to_string({
                                template: '/export/html',
                                layout: 'pdf',
                                locals: {
-                                 :@config => @config,
                                  :@topics => Topic.all,
                                  :@totals => totals
                                }
@@ -80,20 +79,12 @@ class HoursController < ApplicationController
   private
 
   def hour_params
-    params.require(:hour).permit(:short_desc, :long_desc, :topic_id, :begin, :end, :auto_date)
-  end
-
-  def set_config
-    @config = {}
-
-    Config.all.each do |c|
-      @config[c.key] = c.value
-    end
+    params.require(:hour).permit(:short_desc, :long_desc, :topic_id, :begin, :end, :auto_date).merge(user_id: current_user.id)
   end
 
   def totals
     topic_totals = {}
-    Topic.all.each do |t|
+    Topic.where(user_id: current_user.id).each do |t|
       money = 0
       time = 0
       t.hours.each do |h|
@@ -106,7 +97,7 @@ class HoursController < ApplicationController
   end
 
   def to_csv
-    sorted_hours = Hour.all.to_a.sort_by(&:begin)
+    sorted_hours = Hour.where(user_id: current_user.id).to_a.sort_by(&:begin)
     CSV.generate do |csv|
       csv << %w[Date Topic Description Time Value Rate]
       sorted_hours.each do |h|

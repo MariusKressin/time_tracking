@@ -1,8 +1,6 @@
 class TemplatesController < ApplicationController
-  before_action :set_config
-
   def index
-    @templates = Template.all
+    @templates = Template.where(user_id: current_user.id)
   end
 
   def new
@@ -19,10 +17,13 @@ class TemplatesController < ApplicationController
 
   def edit
     @template = Template.find(params[:id])
+    redirect_to '/templates' if @template.user_id != current_user.id
   end
 
   def update
     @template = Template.find(params[:id])
+    return redirect_to '/templates' if @template.user_id != current_user.id
+
     @template.assign_attributes(template_params)
     return redirect_to @template, notice: 'Template saved!' if @template.save
 
@@ -31,10 +32,13 @@ class TemplatesController < ApplicationController
 
   def show
     @template = Template.find(params[:id])
+    return redirect_to '/templates' if @template.user_id != current_user.id
   end
 
   def destroy
     @template = Template.find(params[:id])
+    return redirect_to '/templates' if @template.user_id != current_user.id
+
     return redirect_to '/templates', notice: 'Template deleted.' if @template.destroy
 
     redirect_to @template, alert: 'There was an error deleting the template.'
@@ -42,6 +46,8 @@ class TemplatesController < ApplicationController
 
   def add_to_hours
     @template = Template.find(params[:id])
+    return redirect_to '/templates' if @template.user_id != current_user.id
+
     failure = false
     @template.template_hours.each do |h|
       hour = Hour.new
@@ -60,14 +66,6 @@ class TemplatesController < ApplicationController
   private
 
   def template_params
-    params.require(:template).permit(:title, :description)
-  end
-
-  def set_config
-    @config = {}
-
-    Config.all.each do |c|
-      @config[c.key] = c.value
-    end
+    params.require(:template).permit(:title, :description).merge(user_id: current_user.id)
   end
 end

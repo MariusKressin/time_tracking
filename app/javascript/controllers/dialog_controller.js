@@ -7,7 +7,7 @@ export default class extends Controller {
 
 				Swal.fire({
 						title: 'Are you sure?',
-						text: 'This action is irrevocable.',
+						text: 'This action cannot be undone.',
 						icon: 'warning',
 						showCancelButton: true,
 						cancelButtonText: 'No',
@@ -22,7 +22,7 @@ export default class extends Controller {
 
 				Swal.fire({
 						title: 'Are you sure?',
-						text: 'This topic and all hours associated with it will be irrevocably deleted.',
+						text: 'This topic and all hours associated with it will be permanently deleted.',
 						icon: 'warning',
 						showCancelButton: true,
 						cancelButtonText: 'No',

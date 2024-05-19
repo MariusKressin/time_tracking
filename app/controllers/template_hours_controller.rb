@@ -1,13 +1,13 @@
 class TemplateHoursController < ApplicationController
-  before_action :set_config
-
   def new
     @template_hour = TemplateHour.new
-    @topics = Topic.all
+    @topics = Topic.where(user_id: current_user.id)
   end
 
   def create
     @template_hour = TemplateHour.new
+    return redirect_to '/templates' if @template_hour.template.user_id != current_user.id
+
     @template_hour.assign_attributes(template_hour_params)
     @template_hour.template_id = params[:template_id]
     return redirect_to @template_hour.template, notice: 'Hour template created!' if @template_hour.save
@@ -17,11 +17,13 @@ class TemplateHoursController < ApplicationController
 
   def edit
     @template_hour = TemplateHour.find(params[:id])
-    @topics = Topic.all
+    @topics = Topic.where(user_id: current_user.id)
   end
 
   def update
     @template_hour = TemplateHour.find(params[:id])
+    return redirect_to '/templates' if @template_hour.template.user_id != current_user.id
+
     @template_hour.assign_attributes(template_hour_params)
     return redirect_to @template_hour.template, notice: 'Hour template saved!' if @template_hour.save
 
@@ -31,6 +33,8 @@ class TemplateHoursController < ApplicationController
   def destroy
     @template_hour = TemplateHour.find(params[:id])
     @template = @template_hour.template
+    return reditect_to '/templates' if @template.user_id != current_user.id
+
     return redirect_to @template, notice: 'Hour template deleted!' if @template_hour.destroy
 
     redirect_to @template, alert: 'There was an error deleting the hour template.'
@@ -40,13 +44,5 @@ class TemplateHoursController < ApplicationController
 
   def template_hour_params
     params.require(:template_hour).permit(:hours, :minutes, :topic_id, :template_id)
-  end
-
-  def set_config
-    @config = {}
-
-    Config.all.each do |c|
-      @config[c.key] = c.value
-    end
   end
 end

@@ -27,7 +27,7 @@
 		</div>
 	</a>
 	<div data-controller="time" data-action="click->snackbar#toggle click->time#activate">
-		<div class="flex items-center rounded-full bg-<%= @config['accent'] %>-800 text-white font-bold p-2 lg:px-4 lg:rounded relative" data-time-target="clockin">
+		<div class="flex items-center rounded-full bg-<%= current_user.accent_color %>-800 text-white font-bold p-2 lg:px-4 lg:rounded relative" data-time-target="clockin">
 			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="lg:mr-2 w-6 h-6 inline-block">
 				<path stroke-linecap="round" stroke-linejoin="round" d="M12 6m0 6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
 			</svg>
@@ -39,7 +39,7 @@
 			</div>
 			<input class="hidden" type="number" data-time-target="minutes" />
 		</div>
-		<%= link_to new_hour_path, class: "hidden flex items-center rounded-full bg-#{@config['accent']}-800 text-white font-bold p-2 lg:px-4 lg:rounded relative", data: { 'time-target' => 'clockout' } do %>
+		<%= link_to new_hour_path, class: "hidden flex items-center rounded-full bg-#{current_user.accent_color}-800 text-white font-bold p-2 lg:px-4 lg:rounded relative", data: { 'time-target' => 'clockout' } do %>
 			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="lg:mr-2 w-6 h-6 inline-block" data-time-target="hhand">
 				<path stroke-linecap="round" stroke-linejoin="round" d="M12 6m0 6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
 			</svg>

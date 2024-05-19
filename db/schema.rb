@@ -10,15 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_04_27_221228) do
-  create_table "configs", force: :cascade do |t|
-    t.string "key"
-    t.string "value"
-    t.string "dt"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
+ActiveRecord::Schema[7.0].define(version: 2024_05_18_231115) do
   create_table "hours", force: :cascade do |t|
     t.datetime "begin"
     t.datetime "end"
@@ -28,7 +20,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_27_221228) do
     t.string "short_desc"
     t.text "long_desc"
     t.boolean "auto_date"
+    t.integer "user_id", default: 1, null: false
     t.index ["topic_id"], name: "index_hours_on_topic_id"
+    t.index ["user_id"], name: "index_hours_on_user_id"
   end
 
   create_table "template_hours", force: :cascade do |t|
@@ -47,6 +41,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_27_221228) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id", default: 1, null: false
+    t.index ["user_id"], name: "index_templates_on_user_id"
   end
 
   create_table "topics", force: :cascade do |t|
@@ -55,6 +51,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_27_221228) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "rate"
+    t.integer "user_id", default: 1, null: false
+    t.index ["user_id"], name: "index_topics_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -69,11 +67,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_27_221228) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.string "primary_color"
+    t.string "accent_color"
+    t.string "scheme"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "hours", "topics"
+  add_foreign_key "hours", "users"
   add_foreign_key "template_hours", "templates"
   add_foreign_key "template_hours", "topics"
+  add_foreign_key "templates", "users"
+  add_foreign_key "topics", "users"
 end

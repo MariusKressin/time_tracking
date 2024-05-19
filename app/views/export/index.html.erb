@@ -1,10 +1,10 @@
 <div class="text-xl">Export</div>
 <div class="mt-2">
-	<%= link_to '/export/csv', method: :get, class: "rounded bg-#{@config['primary']}-900 text-white font-bold p-2 px-4 block w-max mr-2 mb-2" do %>
+	<%= link_to '/export/csv', method: :get, class: "rounded bg-#{current_user.primary_color}-900 text-white font-bold p-2 px-4 block w-max mr-2 mb-2" do %>
 		<%= heroicon 'arrow-up', options: { class: 'inline-block' } %>
 		Export as CSV
 	<% end %>
-	<a href="/export/pdf" class="rounded bg-<%= @config['primary'] %>-900 text-white font-bold p-2 px-4 block w-max">
+	<a href="/export/pdf" class="rounded bg-<%= current_user.primary_color %>-900 text-white font-bold p-2 px-4 block w-max">
 		<%= heroicon 'arrow-up', options: { class: 'inline-block' } %>
 		Export as PDF
 	</a>

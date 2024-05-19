@@ -1,22 +1,24 @@
 # frozen_string_literal: true
 
 class TopicsController < ApplicationController
-  before_action :set_config
-
   def index
-    @topics = Topic.all
+    @topics = Topic.where(user_id: current_user.id)
   end
 
   def show
     @topic = Topic.find(params[:id])
+    redirect_to '/topics', alert: "You can't view that!" if @topic.user_id != current_user.id
   end
 
   def edit
     @topic = Topic.find(params[:id])
+    redirect_to '/topics', alert: "You can't view that!" if @topic.user_id != current_user.id
   end
 
   def update
     @topic = Topic.find(params[:id])
+    return redirect_to '/topics', alert: "You can't do that!" if @topic.user_id != current_user.id
+
     @topic.assign_attributes(topic_params)
     return redirect_to @topic, notice: 'Topic saved!' if @topic.save
 
@@ -37,6 +39,8 @@ class TopicsController < ApplicationController
 
   def destroy
     @topic = Topic.find(params[:id])
+    return redirect_to '/topics', alert: "You can't do that!" if @topic.user_id != current_user.id
+
     return redirect_to '/topics', notice: 'Topic deleted.' if @topic.destroy
 
     redirect_to '/topics', alert: 'There was an error deleting the topic.'
@@ -47,21 +51,12 @@ class TopicsController < ApplicationController
   end
 
   def rate_in_dollars=(string)
-    puts 'Hoophoop\n\n\n\n\n\n'
     self.rate = (string.to_f * 100).round
   end
 
   private
 
   def topic_params
-    params.require(:topic).permit(:name, :description, :rate)
-  end
-
-  def set_config
-    @config = {}
-
-    Config.all.each do |c|
-      @config[c.key] = c.value
-    end
+    params.require(:topic).permit(:name, :description, :rate).merge(user_id: current_user.id)
   end
 end
