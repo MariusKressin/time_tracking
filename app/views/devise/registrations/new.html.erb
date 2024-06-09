@@ -9,6 +9,16 @@
   </div>
 
   <div class="field mt-2">
+    <%= f.label :fname, 'First Name' %><br />
+    <%= f.text_field :fname, autocomplete: "first-name", class: 'w-full rounded outline-none' %>
+  </div>
+
+  <div class="field mt-2">
+    <%= f.label :lname, 'Last Name' %><br />
+    <%= f.text_field :lname, autocomplete: "last-name", class: 'w-full rounded outline-none' %>
+  </div>
+
+  <div class="field mt-2">
     <%= f.label :password %>
     <% if @minimum_password_length %>
     <em>(<%= @minimum_password_length %> characters minimum)</em>

@@ -50,9 +50,10 @@ class TemplatesController < ApplicationController
 
     failure = false
     @template.template_hours.each do |h|
+      puts h.hours
       hour = Hour.new
       hour.topic_id = h.topic_id
-      hour.begin = Time.now - h.hours * 3_600 - h.minutes * 60
+      hour.begin = Time.now - (h.hours || 0) * 3_600 - (h.minutes || 0) * 60
       hour.end = Time.now
       hour.short_desc = "From #{@template.title}"
       hour.long_desc = "From #{@template.title}"

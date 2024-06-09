@@ -3,6 +3,10 @@ Rails.application.routes.draw do
                     path_names: { sign_in: 'login', sign_out: 'logout' },
                     controllers: { registrations: 'users/registrations' }
 
+  devise_scope :user do
+    get '/profile', to: 'users/registrations#show', as: 'show_user'
+  end
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")

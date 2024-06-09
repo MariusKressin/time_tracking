@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 class Users::RegistrationsController < Devise::RegistrationsController
-  # before_action :configure_sign_up_params, only: [:create]
-  # before_action :configure_account_update_params, only: [:update]
+  layout 'application', only: [:show, :edit, :update]
+  before_action :configure_sign_up_params, only: [:create]
+  before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
   # def new
@@ -16,6 +17,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @user.accent_color = 'indigo'
     @user.scheme = 'si'
     @user.save
+  end
+
+  def show
+    @user = current_user
   end
 
   # GET /resource/edit
@@ -45,14 +50,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # protected
 
   # If you have extra params to permit, append them to the sanitizer.
-  # def configure_sign_up_params
-  #   devise_parameter_sanitizer.permit(:sign_up, keys: [:attribute])
-  # end
+  def configure_sign_up_params
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:fname, :lname])
+  end
 
   # If you have extra params to permit, append them to the sanitizer.
-  # def configure_account_update_params
-  #   devise_parameter_sanitizer.permit(:account_update, keys: [:attribute])
-  # end
+  def configure_account_update_params
+    devise_parameter_sanitizer.permit(:account_update, keys: [:fname, :lname])
+  end
 
   # The path used after sign up.
   # def after_sign_up_path_for(resource)

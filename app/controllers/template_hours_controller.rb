@@ -6,7 +6,6 @@ class TemplateHoursController < ApplicationController
 
   def create
     @template_hour = TemplateHour.new
-    return redirect_to '/templates' if @template_hour.template.user_id != current_user.id
 
     @template_hour.assign_attributes(template_hour_params)
     @template_hour.template_id = params[:template_id]
