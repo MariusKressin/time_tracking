@@ -5,5 +5,8 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
-Config.create(key: 'primary', value: 'indigo', dt: 'string');
-Config.create(key: 'accent', value: 'blue', dt: 'string');
+users = User.create()
+hours = Hour.create()
+topics = Topic.create()
+templates = Template.create()
+template_hours = TemplateHour.create()
