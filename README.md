@@ -1,5 +1,7 @@
 # README
 
+This is a time tracking project.
+
 Set up by running:
 ```
 bin/rails db:migrate
