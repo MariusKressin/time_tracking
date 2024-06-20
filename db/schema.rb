@@ -10,7 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_05_24_213839) do
+ActiveRecord::Schema[7.0].define(version: 2024_06_20_184739) do
+  create_table "groups", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "hours", force: :cascade do |t|
     t.datetime "begin"
     t.datetime "end"
@@ -59,7 +65,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_24_213839) do
     t.string "fname"
     t.string "lname"
     t.integer "role"
-    t.integer "group"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "email", default: "", null: false
@@ -71,7 +76,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_24_213839) do
     t.string "accent_color"
     t.string "scheme"
     t.string "gname"
+    t.integer "group_id", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["group_id"], name: "index_users_on_group_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
@@ -81,4 +88,5 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_24_213839) do
   add_foreign_key "template_hours", "topics"
   add_foreign_key "templates", "users"
   add_foreign_key "topics", "users"
+  add_foreign_key "users", "groups"
 end

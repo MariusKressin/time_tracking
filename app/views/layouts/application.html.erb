@@ -41,6 +41,12 @@
 				<div class="grow hidden md:block">Topics</div>
 				<%= heroicon 'folder' %>
 			</a>
+			<% if current_user.role >= 3 then %>
+				<a href="/users" class="flex items-center w-full block rounded-md hover:bg-<%= current_user.primary_color %>-800 md:px-5 md:py-3 px-4 py-4">
+					<div class="grow hidden md:block">Users</div>
+					<%= heroicon 'users' %>
+				</a>
+			<% end %>
 			<hr class="my-1">
 			<a href="/settings" class="flex items-center w-full block rounded-md hover:bg-<%= current_user.primary_color %>-800 md:px-5 md:py-3 px-4 py-4">
 				<div class="grow hidden md:block">Settings</div>

@@ -1,0 +1,9 @@
+#+title: Profile Ideas
+
+* Information to display
+** DONE Name
+** DONE Email
+** WAIT Picture
+** STRT Organization
+** STRT Role
+** TODO Config options

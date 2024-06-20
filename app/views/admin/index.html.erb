@@ -1,0 +1,18 @@
+<div class="flex items-center">
+	<div class="text-xl grow">Users</div>
+	<a href="/users/sub" class="flex bg-<%= current_user.accent_color %>-800 rounded-full sm:rounded text-white items-center font-bold p-2 sm:px-3 sm:pr-5">
+		<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6 sm:mr-2">
+			<path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />
+		</svg>
+		<div class="hidden sm:block">New</div>
+	</a>
+</div>
+
+<% @users.each do |user| %>
+	<a href="/users/<%= user.id %>" class="flex p-4 shadow-md rounded-md my-4 w-full bg-slate-200 items-center transition-all ease-out ring-slate-200 hover:-translate-y-0.5">
+		<div class="grow pl-4"><%= user.fname %> <%= user.lname %></span> <span class="ellipsis hidden sm:inline text-slate-600">| <%= role_name(user.role) %></span></div>
+		<div class="flex-col hidden lg:flex">
+			<div class="text-sm text-right">Created <%= time_ago_in_words(user.created_at) %> ago</div>
+		</div>
+	</a>
+<% end %>

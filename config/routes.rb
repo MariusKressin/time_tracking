@@ -1,10 +1,15 @@
 Rails.application.routes.draw do
   devise_for :user, path: '',
-                    path_names: { sign_in: 'login', sign_out: 'logout' },
+                    path_names: { sign_in: 'login', sign_out: 'logout', sign_up: 'signup' },
                     controllers: { registrations: 'users/registrations' }
 
   devise_scope :user do
     get '/profile', to: 'users/registrations#show', as: 'show_user'
+
+    # Paths for sub-user creation, etc.
+    get '/users/sub', to: 'users/registrations#sub_new'
+    post '/users/sub', to: 'users/registrations#sub_create'
+    post '/users', to: 'users/registrations#sub_create'
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -39,4 +44,7 @@ Rails.application.routes.draw do
   get '/export/html', to: 'hours#html', layout: 'pdf'
   get '/export/csv', to: 'hours#csv', as: 'export_csv'
   get '/export/pdf', to: 'hours#pdf', as: 'export_pdf'
+
+  # Users page
+  get '/users', to: 'admin#index'
 end

@@ -1,12 +1,18 @@
-<div class="text-2xl">Profile</div>
+<div class="text-xl">Profile</div>
 
 <br />
 <div class="flex mb-4">
 	<div class="w-24 h-24 bg-slate-300 rounded-md mr-2"></div>
 	<div>
-		<div class="text-xl"><%= current_user.fname || '' %> <%= current_user.lname || '' %></div>
+		<div class="text-lg"><%= current_user.fname || '' %> <%= current_user.lname || '' %></div>
 		<div class="text-md text-slate-600"><%= current_user.email %></div>
 	</div>
+</div>
+
+<div class="mb-4">
+	<%= current_user.group.title || 'Untitled Organization' %>
+	&mdash;
+	<%= role_name(current_user.role) %>
 </div>
 
 <%= link_to 'Edit', edit_user_registration_path(current_user), class: "bg-#{current_user.accent_color}-800 text-white rounded py-2 px-4 w-max inline-block" %>

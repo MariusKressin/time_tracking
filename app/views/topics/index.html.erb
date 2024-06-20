@@ -9,7 +9,7 @@
 </div>
 
 <% @topics.each do |topic| %>
-	<a href="/topics/<%= topic.id %>" class="flex p-4 shadow-md rounded-md my-4 w-full bg-slate-200 items-center transition-all ease-out ring-slate-200 hover:ring-2">
+	<a href="/topics/<%= topic.id %>" class="flex p-4 shadow-md rounded-md my-4 w-full bg-slate-200 items-center transition-all ease-out hover:-translate-y-0.5">
 		<div class="grow pl-4"><%= topic.name %></div>
 		<div class="flex-col hidden lg:flex">
 			<div class="text-sm text-right">Created <%= time_ago_in_words(topic.created_at) %> ago</div>
