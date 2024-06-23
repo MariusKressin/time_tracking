@@ -4,6 +4,7 @@ require 'csv'
 class HoursController < ApplicationController
   def index
     @hours = Hour.where(user_id: current_user.id)
+    @other_hours = Hour.where(user_id: current_user.visible_users)
   end
 
   def edit

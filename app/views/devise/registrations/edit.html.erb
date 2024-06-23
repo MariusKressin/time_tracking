@@ -1,8 +1,13 @@
-<h1 class="text-xl mb-6">Edit Profile</h1>
+<div class="flex items-center mb-6">
+  <a href="/profile" class="inline-block">
+    <%= heroicon 'arrow-left', options: { class: 'inline-block w-6 h-6 p-1 mr-2 sm:w-10 sm:h-10 sm:p-2 sm:mr-4 rounded-full transition ease-in-out hover:bg-slate-200' } %>
+  </a>
+  <div class="text-xl">Edit Profile</div>
+</div>
 
 <h2 class="text-lg mb-2">Personal Info</h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+<%= form_for(resource, as: resource_name, url: '/profile/personal', html: { method: :put }) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
 
   <div class="field mb-2">
@@ -20,26 +25,28 @@
     <%= f.text_field :lname, autofocus: true, autocomplete: "last-name", class: 'rounded outline-none' %>
   </div>
 
+  <%= f.submit "Save", class: "py-2 px-4 bg-#{current_user.accent_color}-800 rounded text-white w-max mr-2" %>
 <% end %>
 
-<div class="w-96 bg-slate-400 h-[1px] my-4"></div>
+<div class="max-w-sm bg-slate-400 h-[1px] my-4"></div>
 
 <h2 class="text-lg mb-2">Password</h2>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
 
 	<div class="field mb-2">
-    <%= f.label :current_password, 'Current Password', class: 'text-red-600 block' %>
-    <%= f.password_field :current_password, autofocus: true, autocomplete: "current-password", class: 'rounded outline-none' %>
+    <%= f.label :current_password, 'Current Password', class: 'block' %>
+    <%= f.password_field :current_password, autocomplete: "current-password", class: 'rounded outline-none' %>
+	</div>
+
+	<div class="field mb-2">
+    <%= f.label :password, 'Password', class: 'block' %>
+    <%= f.password_field :password, autocomplete: "password", class: 'rounded outline-none' %>
 	</div>
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>
 
-  <div class="actions">
-    <%= f.submit "Save", class: "py-2 px-4 bg-#{current_user.accent_color}-800 rounded text-white w-max mr-2" %>
-  </div>
+  <%= f.submit "Save", class: "py-2 px-4 bg-#{current_user.accent_color}-800 rounded text-white w-max mr-2" %>
 <% end %>
-
-<%= link_to "Cancel", :back, class: "mt-2 rounded px-3 py-2 border border-#{current_user.accent_color}-800 text-#{current_user.accent_color}-800 inline-block" %>

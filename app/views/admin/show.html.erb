@@ -1,0 +1,21 @@
+<div class="flex items-center">
+  <a href="javascript:history.back()" class="inline-block">
+    <%= heroicon 'arrow-left', options: { class: 'inline-block w-6 h-6 p-1 mr-2 sm:w-10 sm:h-10 sm:p-2 sm:mr-4 rounded-full transition ease-in-out hover:bg-slate-200' } %>
+  </a>
+  <div class="text-xl">Profile</div>
+</div>
+
+<br />
+<div class="flex mb-4">
+	<div class="w-24 h-24 bg-slate-300 rounded-md mr-2"></div>
+	<div>
+		<div class="text-lg"><%= @user.fname || '' %> <%= @user.lname || '' %> <span class="text-slate-600">| <%= role_name(@user.role) %></span></div>
+		<div class="text-md text-slate-600"><%= @user.email %></div>
+	</div>
+</div>
+
+<div class="mb-4">
+	<%= @user.group.title || 'Untitled Organization' %>
+	&mdash;
+	<%= role_name(@user.role) %>
+</div>

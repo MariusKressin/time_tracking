@@ -13,15 +13,15 @@
   </head>
 
   <body class="flex overflow-hidden" data-controller="snackbar">
-		<aside class="flex flex-col bg-<%= current_user.primary_color %>-900 h-screen sm:p-3 p-2 text-white overflow-scroll text-ellipsis min-w-[73px]">
+		<aside class="flex flex-col bg-<%= current_user.primary_color %>-900 h-screen sm:p-3 p-2 text-white overflow-y-scroll overflow-x-hidden text-ellipsis min-w-[73px] max-w-[18rem]">
 			<h3 class="font-bold p-4 hidden md:block">Time Tracking</h3>
 			<%= link_to show_user_path, class: "rounded-lg hover:bg-#{current_user.primary_color}-800 px-4 py-4 flex items-center" do %>
 				<div class="md:mr-4">
 					<%= heroicon 'user-circle', options: { class: 'w-6 h-6 md:w-10 md:h-10' } %>
 				</div>
-				<div class="hidden md:flex flex-col">
-					<div><%= current_user.fname %> <%= current_user.lname %></div>
-					<div class="text-slate-300"><%= current_user.email %></div>
+				<div class="hidden md:flex flex-col overflow-hidden">
+					<div class="overflow-hidden text-ellipsis"><%= current_user.fname %> <%= current_user.lname %></div>
+					<div class="text-slate-300 overflow-hidden text-ellipsis"><%= current_user.email %></div>
 				</div>
 			<% end %>
 			<a href="/hours" class="flex flex-row-reverse items-center w-full block rounded-md hover:bg-<%= current_user.primary_color %>-800 md:px-5 md:py-3 px-4 py-4">
@@ -42,9 +42,14 @@
 				<%= heroicon 'folder' %>
 			</a>
 			<% if current_user.role >= 3 then %>
+				<hr class="my-1">
 				<a href="/users" class="flex items-center w-full block rounded-md hover:bg-<%= current_user.primary_color %>-800 md:px-5 md:py-3 px-4 py-4">
 					<div class="grow hidden md:block">Users</div>
 					<%= heroicon 'users' %>
+				</a>
+				<a href="/organization" class="flex items-center w-full block rounded-md hover:bg-<%= current_user.primary_color %>-800 md:px-5 md:py-3 px-4 py-4">
+					<div class="grow hidden md:block">Organization</div>
+					<%= heroicon 'building-office-2' %>
 				</a>
 			<% end %>
 			<hr class="my-1">

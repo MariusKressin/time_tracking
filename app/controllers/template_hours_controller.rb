@@ -1,7 +1,7 @@
 class TemplateHoursController < ApplicationController
   def new
     @template_hour = TemplateHour.new
-    @topics = Topic.where(user_id: current_user.id)
+    @topics = Topic.joins(:user).where('users.group_id = ?', current_user.group_id)
   end
 
   def create
@@ -16,12 +16,12 @@ class TemplateHoursController < ApplicationController
 
   def edit
     @template_hour = TemplateHour.find(params[:id])
-    @topics = Topic.where(user_id: current_user.id)
+    @topics = Topic.joins(:user).where('users.group_id = ?', current_user.group_id)
   end
 
   def update
     @template_hour = TemplateHour.find(params[:id])
-    return redirect_to '/templates' if @template_hour.template.user_id != current_user.id
+    return redirect_to '/templates' if @template_hour.template.group_id != current_user.group_id
 
     @template_hour.assign_attributes(template_hour_params)
     return redirect_to @template_hour.template, notice: 'Hour template saved!' if @template_hour.save
@@ -32,7 +32,7 @@ class TemplateHoursController < ApplicationController
   def destroy
     @template_hour = TemplateHour.find(params[:id])
     @template = @template_hour.template
-    return reditect_to '/templates' if @template.user_id != current_user.id
+    return reditect_to '/templates' if @template.group_id != current_user.group_id
 
     return redirect_to @template, notice: 'Hour template deleted!' if @template_hour.destroy
 

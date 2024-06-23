@@ -10,6 +10,10 @@ Rails.application.routes.draw do
     get '/users/sub', to: 'users/registrations#sub_new'
     post '/users/sub', to: 'users/registrations#sub_create'
     post '/users', to: 'users/registrations#sub_create'
+
+    # Paths for user info editing
+    put '/profile/personal', to: 'users/registrations#update_personal'
+    patch '/profile/personal', to: 'users/registrations#update_personal'
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -47,4 +51,11 @@ Rails.application.routes.draw do
 
   # Users page
   get '/users', to: 'admin#index'
+  get '/users/:id', to: 'admin#show'
+
+  # Groups
+  get '/organization', to: 'groups#index'
+  get '/organization/edit', to: 'groups#edit', as: 'group'
+  put '/organization/edit', to: 'groups#update'
+  patch '/organization/edit', to: 'groups#update'
 end

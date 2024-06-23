@@ -1,0 +1,27 @@
+<div class="flex items-center">
+	<div class="text-xl grow"><%= @group.title %></div>
+	<a href="/organization/edit" class="flex bg-<%= current_user.accent_color %>-800 rounded-full sm:rounded text-white items-center font-bold p-2 sm:px-3 sm:pr-5">
+        <%= heroicon 'pencil', options: { class: 'w-4 ml-1' }, variant: :solid  %>
+		<div class="hidden sm:block ml-2">Edit</div>
+	</a>
+</div>
+
+<div class="rounded bg-gray-200 my-4 p-4 min-h-[10em] overflow-wrap">
+	<p class="text-wrap"><%= @group.description %></p>
+</div>
+
+<div class="text-lg">Admins</div>
+
+<% @users.each do |user| %>
+	<a href="/users/<%= user.id %>" class="flex p-4 shadow-md rounded-md my-4 w-full bg-slate-200 items-center transition-all ease-out ring-slate-200 hover:-translate-y-0.5">
+		<div class="grow pl-4">
+            <%= user.fname %> <%= user.lname %>
+            <% if user.role == 4 then %>
+                <span class="text-blue-700">| Creator</span>
+            <% end %>
+        </div>
+		<div class="flex-col hidden lg:flex">
+			<div class="text-sm text-right">Created <%= time_ago_in_words(user.created_at) %> ago</div>
+		</div>
+	</a>
+<% end %>

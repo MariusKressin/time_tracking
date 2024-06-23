@@ -1,4 +1,10 @@
-<div class="text-xl">Profile</div>
+<div class="flex items-center">
+	<div class="text-xl grow">Profile</div>
+	<a href="/edit" class="flex bg-<%= current_user.accent_color %>-800 rounded-full sm:rounded text-white items-center font-bold p-2 sm:px-3 sm:pr-5">
+        <%= heroicon 'pencil', options: { class: 'w-4 ml-1' }, variant: :solid  %>
+		<div class="hidden sm:block ml-2">Edit</div>
+	</a>
+</div>
 
 <br />
 <div class="flex mb-4">
@@ -14,5 +20,3 @@
 	&mdash;
 	<%= role_name(current_user.role) %>
 </div>
-
-<%= link_to 'Edit', edit_user_registration_path(current_user), class: "bg-#{current_user.accent_color}-800 text-white rounded py-2 px-4 w-max inline-block" %>

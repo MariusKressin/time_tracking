@@ -2,7 +2,7 @@
 
 class Users::RegistrationsController < Devise::RegistrationsController
   layout 'application', only: %i[sub_new show edit update]
-  before_action :authenticate_user!, only: %i[sub_new sub_create show edit update]
+  before_action :authenticate_user!, only: %i[sub_new sub_create show edit update update_personal]
   before_action :authenticate_admin!, only: %i[sub_new sub_create]
   before_action :configure_sign_up_params, only: [:create]
   before_action :configure_account_update_params, only: [:update]
@@ -60,11 +60,23 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @user.accent_color = 'indigo'
     @user.scheme = 'si'
     @user.group_id = current_user.group_id
-    redirect_to '/users', notice: 'User created!' if @user.save
+    return redirect_to '/users', notice: 'User created!' if @user.save
+
+    redirect_to '/users/sub', alert: 'Something went wrong!'
   end
 
+  # GET /profile
   def show
     @user = current_user
+  end
+
+  # PUT /profile/personal
+  def update_personal
+    @user = current_user
+    @user.assign_attributes(personal_user_params)
+    return redirect_to '/edit', notice: 'Saved!' if @user.save
+
+    redirect_to '/edit', alert: 'Something went wrong!'
   end
 
   # GET /resource/edit
@@ -121,5 +133,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def sub_user_params
     params.require(:user).permit(:fname, :lname, :email, :password, :password_confirmation, :role)
+  end
+
+  def personal_user_params
+    params.require(:user).permit(:fname, :lname, :email)
   end
 end

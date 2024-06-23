@@ -1,0 +1,24 @@
+<div class="text-xl grow mb-4">Edit Organization</div>
+
+<div class="px-3">
+    <%= form_with model: @group, local: true do |f| %>
+        <%= render partial: 'components/input_and_label', locals: {
+            f: f,
+            label: 'Title',
+            field: :title,
+        } %>
+        <%= render partial: 'components/textarea_and_label', locals: {
+            f: f,
+            label: 'Description',
+            field: :description,
+        } %>
+        <div class="flex">
+            <div class="py-2 px-4 bg-<%= current_user.accent_color %>-800 rounded text-white w-max">
+                <%= f.submit "Save" %>
+            </div>
+            <div class="py-2 px-4 border border-<%= current_user.accent_color %>-800 rounded w-max ml-2 text-<%= current_user.accent_color %>-800">
+                <%= link_to "Cancel", '/organization' %>
+            </div>
+        </div>
+    <% end %>
+</div>
