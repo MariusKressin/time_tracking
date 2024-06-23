@@ -4,6 +4,7 @@ This is a time tracking project.
 
 Set up by running:
 ```
+bundle install
 bin/rails db:migrate
 ```
 If you'll be running it in production mode, compile the assets by running:
