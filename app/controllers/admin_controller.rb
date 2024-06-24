@@ -8,10 +8,4 @@ class AdminController < ApplicationController
   def show
     @user = User.find(params[:id])
   end
-
-  private
-
-  def authenticate_admin!
-    current_user.role >= 3
-  end
 end

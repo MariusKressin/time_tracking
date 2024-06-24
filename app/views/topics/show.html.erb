@@ -14,11 +14,11 @@
 			</svg>
 		<% end %>
 	</div>
-	<a href="/topics/<%= @topic.id %>/edit" class="hidden sm:block">
-		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="inline-block w-12 h-12 p-3 transition rounded-full ease-out hover:bg-slate-200">
-			<path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z" />
-		</svg>
-	</a>
+	<%= link_to edit_topic_path(@topic), class:'hidden sm:block' do %>
+		<div class="transition rounded-full ease-out hover:bg-slate-200">
+			<%= heroicon 'pencil', options: { class: 'inline-block w-12 h-12 p-3 ', disable_default_class: true }, variant: :solid %>
+		</div>
+	<% end %>
 	<div data-controller="menu" class="sm:hidden" tabindex="0" data-action="blur->menu#close">
 		<div data-action="click->menu#toggle" class="rounded-full sm:p-2 p-1 transition ease-out hover:bg-slate-300">
 			<%= heroicon 'ellipsis-vertical', options: { class: 'sm:w-6 sm:h-6 w-5 h-5' } %>

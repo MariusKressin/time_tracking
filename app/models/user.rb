@@ -1,7 +1,6 @@
 class User < ApplicationRecord
   belongs_to :group
 
-  has_many :topics
   has_many :hours
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable

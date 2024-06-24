@@ -5,5 +5,8 @@
     "puppeteer": "^22.4.1",
     "puppeteer-core": "^22.4.1",
     "sweetalert2": "^11.10.8"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.13"
   }
 }

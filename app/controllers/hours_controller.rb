@@ -2,6 +2,8 @@
 
 require 'csv'
 class HoursController < ApplicationController
+  before_action :authenticate_permissions!, only: %i[update destroy show edit]
+
   def index
     @hours = Hour.where(user_id: current_user.id)
     @other_hours = Hour.where(user_id: current_user.visible_users)
@@ -9,13 +11,11 @@ class HoursController < ApplicationController
 
   def edit
     @hour = Hour.find(params[:id])
-    redirect_to '/hours', alert: "You aren't allowed to view that!" if @hour.user_id != current_user.id
     @topics = Topic.all
   end
 
   def update
     @hour = Hour.find(params[:id])
-    redirect_to '/hours', alert: "You aren't allowed to do that!" if @hour.user_id != current_user.id
     @hour.assign_attributes(hour_params)
     redirect_to @hour, notice: 'Time saved!' if @hour.save
   end
@@ -44,7 +44,6 @@ class HoursController < ApplicationController
 
   def destroy
     @hour = Hour.find(params[:id])
-    redirect_to '/hours', alert: "You aren't allowed to do that!" if @hour.user_id != current_user.id
     redirect_to '/hours', notice: 'Hours deleted.' if @hour.destroy
   end
 
@@ -122,5 +121,12 @@ class HoursController < ApplicationController
         ]
       end
     end
+  end
+
+  def authenticate_permissions!
+    @hour = Hour.find(params[:id])
+    return true if @hour.user_id == current_user.id || @hour.user.role < current_user.role
+
+    false
   end
 end
