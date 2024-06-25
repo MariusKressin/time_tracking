@@ -52,6 +52,10 @@ Rails.application.routes.draw do
   # Users page
   get '/users', to: 'admin#index'
   get '/users/:id', to: 'admin#show'
+  delete '/users/:id', to: 'admin#destroy'
+  get '/users/:id/edit', to: 'admin#edit'
+  put '/users/:id/edit', to: 'admin#update'
+  patch '/users/:id/edit', to: 'admin#update'
 
   # Groups
   get '/organization', to: 'groups#index'

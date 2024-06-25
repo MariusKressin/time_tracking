@@ -1,21 +1,48 @@
 <div class="flex items-center">
   <a href="javascript:history.back()" class="inline-block">
-    <%= heroicon 'arrow-left', options: { class: 'inline-block w-6 h-6 p-1 mr-2 sm:w-10 sm:h-10 sm:p-2 sm:mr-4 rounded-full transition ease-in-out hover:bg-slate-200' } %>
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline-block w-6 h-6 p-1 mr-2 sm:w-10 sm:h-10 sm:p-2 sm:mr-4 rounded-full transition ease-in-out hover:bg-slate-200">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+    </svg>
   </a>
-  <div class="text-xl">Profile</div>
+  <div class="grow text-lg sm:text-xl">
+    <%= @user.fname %> <%= @user.lname %>
+  </div>
+  <% if @user.role < current_user.role %>
+    <div data-controller="dialog">
+      <%= button_to '/', class:'hidden sm:block', data: { action: 'click->dialog#user_confirm' }, method: :delete do %>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline-block w-12 h-12 p-3 transition rounded-full ease-in-out hover:bg-slate-200">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+        </svg>
+      <% end %>
+    </div>
+    <%= link_to "/users/#{@user.id}/edit", class:'hidden sm:block' do %>
+      <div class="transition rounded-full ease-out hover:bg-slate-200">
+        <%= heroicon 'pencil', options: { class: 'inline-block w-12 h-12 p-3', disable_default_class: true }, variant: :solid %>
+      </div>
+    <% end %>
+    <div data-controller="menu" class="sm:hidden" tabindex="0" data-action="blur->menu#close">
+      <div data-action="click->menu#toggle" class="rounded-full sm:p-2 p-1 transition ease-out hover:bg-slate-300">
+        <%= heroicon 'ellipsis-vertical', options: { class: 'sm:w-6 sm:h-6 w-5 h-5' } %>
+      </div>
+      <div class="rounded-md bg-white absolute shadow-md py-1 invisible opacity-0 -translate-y-2 transition ease-in-out right-6" data-menu-target="menu" data-controller="dialog">
+        <%= link_to 'Edit', "/users/#{@user.id}/edit", class:'block px-5 transition ease font-semibold hover:bg-slate-200 py-2' %>
+        <%= button_to 'Delete', "/users/#{@user.id}", method: :delete, class:'block px-5 transition ease font-semibold hover:bg-slate-200 py-2', data: { action: 'click->dialog#user_confirm' } %>
+      </div>
+    </div>
+  <% end %>
 </div>
 
 <br />
 <div class="flex mb-4">
-	<div class="w-24 h-24 bg-slate-300 rounded-md mr-2"></div>
-	<div>
-		<div class="text-lg"><%= @user.fname || '' %> <%= @user.lname || '' %> <span class="text-slate-600">| <%= role_name(@user.role) %></span></div>
-		<div class="text-md text-slate-600"><%= @user.email %></div>
-	</div>
+  <div class="w-24 h-24 bg-slate-300 rounded-md mr-2"></div>
+  <div>
+    <div class="text-lg"><%= @user.fname || '' %> <%= @user.lname || '' %> <span class="<%= (@user.role == 4) ? 'text-blue-700' : 'text-slate-600' %>">| <%= role_name(@user.role) %></span></div>
+    <div class="text-md text-slate-600"><%= @user.email %></div>
+  </div>
 </div>
 
 <div class="mb-4">
-	<%= @user.group.title || 'Untitled Organization' %>
-	&mdash;
-	<%= role_name(@user.role) %>
+  <%= @user.group.title || 'Untitled Organization' %>
+  &mdash;
+  <%= role_name(@user.role) %>
 </div>

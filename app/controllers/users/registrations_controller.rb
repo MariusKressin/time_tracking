@@ -19,6 +19,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
     # NOT COPIED {
     @group = Group.new
+    @group.title = "Untitled Organization"
+    @group.description = "No description."
     @group.save
     resource.primary_color = 'slate'
     resource.accent_color = 'indigo'
@@ -54,6 +56,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /users/sub
   def sub_create
+    if sub_user_params[:role].to_i >= current_user.role
+      return redirect_to '/users/sub', alert: 'You can\'t do that!'
+    end
+
     @user = User.new
     @user.assign_attributes(sub_user_params)
     @user.primary_color = 'slate'
