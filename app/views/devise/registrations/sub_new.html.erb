@@ -18,6 +18,13 @@
 			field: :email,
 			type: :email,
 		} %>
+
+		<%= render partial: 'components/textarea_and_label', locals: {
+			f: f,
+			label: 'Bio',
+			field: :bio,
+		} %>
+
 		<%= render partial: 'components/input_and_label', locals: {
 			f: f,
 			label: 'Password',

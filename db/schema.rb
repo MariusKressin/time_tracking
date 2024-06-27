@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_06_24_231743) do
+ActiveRecord::Schema[7.0].define(version: 2024_06_27_195012) do
   create_table "groups", force: :cascade do |t|
     t.string "title"
     t.datetime "created_at", null: false
@@ -78,6 +78,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_24_231743) do
     t.string "scheme"
     t.string "gname"
     t.integer "group_id", null: false
+    t.text "bio"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["group_id"], name: "index_users_on_group_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

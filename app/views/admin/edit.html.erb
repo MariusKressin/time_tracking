@@ -18,6 +18,11 @@
 			field: :email,
 			type: :email,
 		} %>
+		<%= render partial: 'components/textarea_and_label', locals: {
+			f: f,
+			label: 'Bio',
+			field: :bio,
+		} %>
 		<%= f.label :role, 'Role', class: 'mb-1 block' %>
 		<%= f.select :role, new_user_options(current_user.role), { prompt: 'Choose...' }, { class: 'rounded mb-2' } %>
 		<div class="flex">

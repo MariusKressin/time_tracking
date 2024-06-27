@@ -25,6 +25,11 @@
     <%= f.text_field :lname, autofocus: true, autocomplete: "last-name", class: 'rounded outline-none' %>
   </div>
 
+  <div class="field mb-2">
+    <%= f.label :bio, 'Bio', class: 'block' %>
+    <%= f.text_area :bio, class: 'rounded outline-none' %>
+  </div>
+
   <%= f.submit "Save", class: "py-2 px-4 bg-#{current_user.accent_color}-800 rounded text-white w-max mr-2" %>
 <% end %>
 

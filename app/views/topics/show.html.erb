@@ -29,9 +29,11 @@
 		</div>
 	</div>
 </div>
+
 <div class="rounded bg-slate-200 my-4 p-4 min-h-[10em] overflow-wrap">
 	<p class="text-wrap"><%= @topic.description %></p>
 </div>
+
 <div class="flex">
 	<div class="font-bold mr-4">Hourly rate:</div>
 	<div>$<%= "%0.2f" % (@topic.rate / 100.0) %></div>

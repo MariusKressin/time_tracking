@@ -12,11 +12,12 @@
 	<div>
 		<div class="text-lg"><%= current_user.fname || '' %> <%= current_user.lname || '' %></div>
 		<div class="text-md text-slate-600"><%= current_user.email %></div>
+		<div class="text-slate-600">
+			<%= current_user.group.title %>
+		</div>
 	</div>
 </div>
 
-<div class="mb-4">
-	<%= current_user.group.title || 'Untitled Organization' %>
-	&mdash;
-	<%= role_name(current_user.role) %>
+<div class="rounded bg-slate-200 my-4 p-4 min-h-[10em] overflow-wrap">
+	<p class="text-wrap"><%= current_user.bio %></p>
 </div>
