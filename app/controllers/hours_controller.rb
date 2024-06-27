@@ -32,7 +32,7 @@ class HoursController < ApplicationController
 
   def new
     @hour = Hour.new
-    @topics = Topic.where(user_id: current_user.id)
+    @topics = Topic.where(group_id: current_user.group_id)
     @minutes = params[:minutes].to_i || -1
   end
 
@@ -53,7 +53,7 @@ class HoursController < ApplicationController
   end
 
   def html
-    @topics = Topic.where(user_id: current_user.id)
+    @topics = Topic.where(group_id: current_user.group_id)
     @totals = totals
     render 'export/html', layout: 'pdf'
   end
@@ -84,7 +84,7 @@ class HoursController < ApplicationController
 
   def totals
     topic_totals = {}
-    Topic.where(user_id: current_user.id).each do |t|
+    Topic.where(group_id: current_user.group_id).each do |t|
       money = 0
       time = 0
       t.hours.each do |h|
