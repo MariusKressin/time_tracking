@@ -10,12 +10,10 @@ class HoursController < ApplicationController
   end
 
   def edit
-    @hour = Hour.find(params[:id])
     @topics = Topic.all
   end
 
   def update
-    @hour = Hour.find(params[:id])
     @hour.assign_attributes(hour_params)
     redirect_to @hour, notice: 'Time saved!' if @hour.save
   end
@@ -43,14 +41,10 @@ class HoursController < ApplicationController
   end
 
   def destroy
-    @hour = Hour.find(params[:id])
     redirect_to '/hours', notice: 'Hours deleted.' if @hour.destroy
   end
 
-  def show
-    @hour = Hour.find(params[:id])
-    redirect_to '/hours', alert: "You aren't allowed to view that!" if @hour.user_id != current_user.id
-  end
+  def show; end
 
   def html
     @topics = Topic.where(group_id: current_user.group_id)
