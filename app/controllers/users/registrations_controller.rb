@@ -19,8 +19,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
     # NOT COPIED {
     @group = Group.new
-    @group.title = "Untitled Organization"
-    @group.description = "No description."
+    @group.title = 'Untitled Organization'
+    @group.description = 'No description.'
     @group.save
     resource.primary_color = 'slate'
     resource.accent_color = 'indigo'
@@ -113,12 +113,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:fname, :lname])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:fname, :lname, :bio])
   end
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_account_update_params
-    devise_parameter_sanitizer.permit(:account_update, keys: [:fname, :lname])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:fname, :lname, :bio])
   end
 
   # The path used after sign up.

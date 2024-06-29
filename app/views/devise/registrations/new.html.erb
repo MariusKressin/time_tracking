@@ -8,27 +8,36 @@
     <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'w-full rounded outline-none' %>
   </div>
 
-  <div class="field mt-2">
-    <%= f.label :fname, 'First Name' %><br />
-    <%= f.text_field :fname, autocomplete: "first-name", class: 'w-full rounded outline-none' %>
+  <div class="flex mt-2">
+    <div class="field mr-2">
+      <%= f.label :fname, 'First Name' %><br />
+      <%= f.text_field :fname, autocomplete: "given-name", class: 'w-full rounded outline-none' %>
+    </div>
+
+    <div class="field">
+      <%= f.label :lname, 'Last Name' %><br />
+      <%= f.text_field :lname, autocomplete: "family-name", class: 'w-full rounded outline-none' %>
+    </div>
   </div>
 
   <div class="field mt-2">
-    <%= f.label :lname, 'Last Name' %><br />
-    <%= f.text_field :lname, autocomplete: "last-name", class: 'w-full rounded outline-none' %>
+    <%= f.label :bio %><br />
+    <%= f.text_area :bio, class: 'w-full rounded outline-none' %>
   </div>
 
-  <div class="field mt-2">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password", class: 'w-full rounded outline-none' %>
-  </div>
+  <div class="flex mt-2">
+    <div class="field mr-2">
+      <%= f.label :password %>
+      <% if @minimum_password_length %>
+      <em>(<%= @minimum_password_length %> characters minimum)</em>
+      <% end %><br />
+      <%= f.password_field :password, autocomplete: "new-password", class: 'w-full rounded outline-none' %>
+    </div>
 
-  <div class="field mt-2">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'w-full rounded outline-none' %>
+    <div class="field">
+      <%= f.label :password_confirmation, 'Confirm Password' %><br />
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'w-full rounded outline-none' %>
+    </div>
   </div>
 
 	<%= f.hidden_field :primary_color, :value => 'slate' %>
