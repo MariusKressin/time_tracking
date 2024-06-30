@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class TopicsController < ApplicationController
-  before_action :authenticate_admin!, not: %i[index show]
+  before_action :authenticate_admin!, except: %i[index show]
 
   def index
     @topics = Topic.where(group_id: current_user.group_id)

@@ -119,8 +119,6 @@ class HoursController < ApplicationController
 
   def authenticate_permissions!
     @hour = Hour.find(params[:id])
-    return true if @hour.user_id == current_user.id || @hour.user.role < current_user.role
-
-    false
+    error 'You can\'t access that!' unless @hour.user_id == current_user.id || @hour.user.role < current_user.role
   end
 end

@@ -6,6 +6,10 @@ class ApplicationController < ActionController::Base
   private
 
   def authenticate_admin!
-    current_user.role >= 3
+    error 'You can\'t access that!' unless current_user.role >= 3
+  end
+
+  def error(message)
+    redirect_back fallback_location: '/hours', alert: message
   end
 end
