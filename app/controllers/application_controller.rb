@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
     error 'You can\'t access that!' unless current_user.role >= 3
   end
 
-  def error(message)
-    redirect_back fallback_location: '/hours', alert: message
+  def error(message, fallback = '/hours')
+    redirect_back fallback_location: fallback, alert: message
   end
 end

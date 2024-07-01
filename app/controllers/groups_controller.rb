@@ -1,7 +1,7 @@
 class GroupsController < ApplicationController
   def index
     @group = current_user.group
-    @users = User.where('role >= 3')
+    @users = User.where('role >= 3 AND group_id = ?', @group.id)
   end
 
   def edit

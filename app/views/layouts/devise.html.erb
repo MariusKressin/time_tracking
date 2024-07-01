@@ -12,7 +12,10 @@
     <%= javascript_importmap_tags %>
     </head>
     <body class="bg-slate-100 flex w-screen h-screen justify-center items-center" data-controller="dalert">
-        <div class="bg-white w-full sm:rounded-md sm:h-max sm:w-initial max-w-screen sm:min-w-[26rem] px-12 p-8 shadow">
+        <header class="fixed top-0 w-screen bg-indigo-800 shadow-lg text-xl text-white p-2 text-center sm:p-4 sm:border-b-4 sm:border-blue-600">
+            Time Tracking
+        </header>
+        <div class="bg-white w-full sm:rounded-md sm:h-max sm:w-auto max-w-screen sm:min-w-[26rem] px-12 p-8 shadow">
             <% if alert %>
                 <div class="max-w-[24rem] flex items-center pl-6 p-4 rounded-md border-l-8 border-l-red-500 bg-red-200 border border-red-500 mb-2 text-red-800" data-dalert-target="alert">
                     <div class="grow">
@@ -31,5 +34,8 @@
             <% end %>
             <%= yield %>
         </div>
+        <footer class="fixed bottom-0 w-screen shadow-lg p-2 text-sm bg-white text-slate-400 text-center">
+            &#169; 2024 Schmoop LLC.
+        </footer>
     </body>
 </html>

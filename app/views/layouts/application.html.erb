@@ -1,79 +1,86 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Time Tracking</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+	<head>
+		<title>Time Tracking</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<%= csrf_meta_tags %>
+		<%= csp_meta_tag %>
 		<%= favicon_link_tag %>
-    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+		<%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-  </head>
+		<%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+		<%= javascript_importmap_tags %>
+	</head>
 
-  <body class="flex overflow-hidden" data-controller="snackbar">
-		<aside class="flex flex-col bg-<%= current_user.primary_color %>-900 h-screen sm:p-3 p-2 text-white overflow-y-scroll overflow-x-hidden text-ellipsis min-w-[73px] max-w-[18rem]">
-			<h3 class="font-bold p-4 hidden md:block">Time Tracking</h3>
-			<%= link_to show_user_path, class: "rounded-lg hover:bg-#{current_user.primary_color}-800 px-4 py-4 flex items-center" do %>
-				<div class="md:mr-4">
-					<%= heroicon 'user-circle', options: { class: 'w-6 h-6 md:w-10 md:h-10' } %>
+	<body class="flex overflow-hidden" data-controller="snackbar">
+		<div class="z-20" data-controller="extend" data-action="blur->extend#closeSidebar">
+			<aside class="transition ease-in-out fixed -translate-x-72 md:translate-x-0 md:static shadow-2xl shadow-black md:shadow-none bg-<%= current_user.primary_color %>-900 h-screen text-white min-w-[73px] max-w-[18rem]" data-extend-target="menu" data-action="blur->extend#closeSidebar">
+				<div class="overflow-y-scroll overflow-x-hidden text-ellipsis p-2 text-white flex flex-col h-full">
+					<h3 class="font-bold p-4">Time Tracking</h3>
+					<%= link_to show_user_path, class: "rounded-lg hover:bg-#{current_user.primary_color}-800 px-4 py-4 flex items-center" do %>
+						<div class="mr-4">
+							<%= heroicon 'user-circle', options: { class: 'w-10 h-10', disable_default_class: true } %>
+						</div>
+						<div class="flex flex-col overflow-hidden">
+							<div class="overflow-hidden text-ellipsis"><%= current_user.fname %> <%= current_user.lname %></div>
+							<div class="text-slate-300 overflow-hidden text-ellipsis"><%= current_user.email %></div>
+						</div>
+					<% end %>
+					<a href="/hours" class="flex flex-row-reverse items-center w-full block rounded-md hover:bg-<%= current_user.primary_color %>-800 md:px-5 md:py-3 px-4 py-4 relative">
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 inline-block" data-snackbar-target="hhand">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M12 6m0 6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+						</svg>
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 inline-block absolute" data-snackbar-target="mhand">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6"/>
+						</svg>
+						<div class="grow">Hours</div>
+					</a>
+					<a href="/templates" class="flex items-center w-full block rounded-md hover:bg-<%= current_user.primary_color %>-800 px-5 py-3">
+						<div class="grow">Templates</div>
+						<%= heroicon 'document-text' %>
+					</a>
+					<a href="/topics" class="flex items-center w-full block rounded-md hover:bg-<%= current_user.primary_color %>-800 px-5 py-3">
+						<div class="grow">Topics</div>
+						<%= heroicon 'folder' %>
+					</a>
+					<% if current_user.role >= 3 then %>
+						<hr class="my-1">
+						<a href="/users" class="flex items-center w-full block rounded-md hover:bg-<%= current_user.primary_color %>-800 px-5 py-3">
+							<div class="grow">Users</div>
+							<%= heroicon 'users' %>
+						</a>
+						<a href="/organization" class="flex items-center w-full block rounded-md hover:bg-<%= current_user.primary_color %>-800 px-5 py-3">
+							<div class="grow">Organization</div>
+							<%= heroicon 'building-office-2' %>
+						</a>
+					<% end %>
+					<hr class="my-1">
+					<a href="/settings" class="flex items-center w-full block rounded-md hover:bg-<%= current_user.primary_color %>-800 px-5 py-3">
+						<div class="grow">Settings</div>
+						<%= heroicon 'cog' %>
+					</a>
+					<div class="grow flex flex-col items-center justify-end">
+						<div class="block rounded-md bg-white text-<%= current_user.accent_color %>-900 px-5 py-2 hover:ring-4 ring-<%= current_user.primary_color %>-700 flex w-full">
+							<form autocomplete="off" action="<%= destroy_user_session_path %>" method="delete" class="w-full">
+								<input type="hidden" name="_method" value="delete" autocomplete="off">
+								<button type="submit" class="flex w-full">
+									<div class="grow text-left">Log Out</div>
+									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+										<path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
+									</svg>
+								</button>
+							</form>
+						</div>
+					</div>
 				</div>
-				<div class="hidden md:flex flex-col overflow-hidden">
-					<div class="overflow-hidden text-ellipsis"><%= current_user.fname %> <%= current_user.lname %></div>
-					<div class="text-slate-300 overflow-hidden text-ellipsis"><%= current_user.email %></div>
+				<div class="z-20 translate-x-72 fixed block md:hidden top-2 rounded-e-full pl-1 p-2 bg-<%= current_user.primary_color %>-900 text-white" data-action="click->extend#toggleSidebar" data-extend-target="chevContainer">
+					<%= heroicon 'chevron-right', options: { 'data-extend-target' => 'chevron', class: 'transition ease-in-out w-5 h-5', disable_default_class: true } %>
 				</div>
-			<% end %>
-			<a href="/hours" class="flex flex-row-reverse items-center w-full block rounded-md hover:bg-<%= current_user.primary_color %>-800 md:px-5 md:py-3 px-4 py-4">
-				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 inline-block" data-snackbar-target="hhand">
-					<path stroke-linecap="round" stroke-linejoin="round" d="M12 6m0 6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-				</svg>
-				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 inline-block absolute" data-snackbar-target="mhand">
-					<path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6"/>
-				</svg>
-				<div class="grow hidden md:block">Hours</div>
-			</a>
-			<a href="/templates" class="flex items-center w-full block rounded-md hover:bg-<%= current_user.primary_color %>-800 md:px-5 md:py-3 px-4 py-4">
-				<div class="grow hidden md:block">Templates</div>
-				<%= heroicon 'document-text' %>
-			</a>
-			<a href="/topics" class="flex items-center w-full block rounded-md hover:bg-<%= current_user.primary_color %>-800 md:px-5 md:py-3 px-4 py-4">
-				<div class="grow hidden md:block">Topics</div>
-				<%= heroicon 'folder' %>
-			</a>
-			<% if current_user.role >= 3 then %>
-				<hr class="my-1">
-				<a href="/users" class="flex items-center w-full block rounded-md hover:bg-<%= current_user.primary_color %>-800 md:px-5 md:py-3 px-4 py-4">
-					<div class="grow hidden md:block">Users</div>
-					<%= heroicon 'users' %>
-				</a>
-				<a href="/organization" class="flex items-center w-full block rounded-md hover:bg-<%= current_user.primary_color %>-800 md:px-5 md:py-3 px-4 py-4">
-					<div class="grow hidden md:block">Organization</div>
-					<%= heroicon 'building-office-2' %>
-				</a>
-			<% end %>
-			<hr class="my-1">
-			<a href="/settings" class="flex items-center w-full block rounded-md hover:bg-<%= current_user.primary_color %>-800 md:px-5 md:py-3 px-4 py-4">
-				<div class="grow hidden md:block">Settings</div>
-				<%= heroicon 'cog' %>
-			</a>
-			<div class="grow flex flex-col items-center justify-end">
-				<div class="block rounded-md bg-white text-<%= current_user.accent_color %>-900 md:px-5 md:py-2 px-4 py-4 hover:ring-4 ring-<%= current_user.primary_color %>-700 flex w-full">
-					<form autocomplete="off" action="<%= destroy_user_session_path %>" method="delete" class="w-full">
-						<input type="hidden" name="_method" value="delete" autocomplete="off">
-						<button type="submit" class="flex w-full">
-							<div class="grow hidden md:block text-left">Log Out</div>
-							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-								<path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
-							</svg>
-						</button>
-					</form>
-				</div>
-			</div>
-		</aside>
-    <main class="grow mt-0 md:px-16 md:py-10 px-8 py-4 bg-white h-screen overflow-auto">
-				<%= yield %>
-    </main>
+			</aside>
+		</div>
+		<main class="grow mt-0 md:px-16 md:py-10 px-8 py-4 bg-white h-screen overflow-auto">
+			<%= yield %>
+		</main>
 		<div class="fixed bottom-2 translate-y-10 w-full h-10 flex justify-center hidden transition ease-in-out opacity-0" data-snackbar-target="snackbar">
 			<div class="hidden" data-snackbar-target="notice"><%= notice %></div>
 			<div class="hidden" data-snackbar-target="alert"><%= alert %></div>
@@ -84,5 +91,5 @@
 				</svg>
 			</div>
 		</div>
-  </body>
+	</body>
 </html>

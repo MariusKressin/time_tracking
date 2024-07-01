@@ -6,8 +6,8 @@
 			Clear
 		</div>
 	<% end %>
-	<div data-controller="extend" class="relative" tabindex="0" data-action="blur->extend#close">
-		<div data-action="click->extend#toggle" class="rounded-full lg:rounded p-2 lg:px-4 transition ease-out flex items-center bg-slate-200 hover:bg-slate-300">
+	<div data-controller="extend" class="hidden sm:block relative" tabindex="0" data-action="blur->extend#closeMenu">
+		<div data-action="click->extend#toggleMenu" class="rounded-full lg:rounded p-2 lg:px-4 transition ease-out flex items-center bg-slate-200 hover:bg-slate-300">
 			<div class="hidden lg:inline-block mr-2">
 				Export
 			</div>

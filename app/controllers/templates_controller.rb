@@ -1,4 +1,6 @@
 class TemplatesController < ApplicationController
+  before_action :authenticate_permissions!, except: %i[index new create]
+
   def index
     @templates = Template.where(user_id: current_user.id)
   end
@@ -15,43 +17,29 @@ class TemplatesController < ApplicationController
     redirect_to '/templates/new', alert: 'There was an error creating the template.'
   end
 
-  def edit
-    @template = Template.find(params[:id])
-    redirect_to '/templates' if @template.user_id != current_user.id
-  end
+  def edit; end
 
   def update
-    @template = Template.find(params[:id])
-    return redirect_to '/templates' if @template.user_id != current_user.id
-
     @template.assign_attributes(template_params)
     return redirect_to @template, notice: 'Template saved!' if @template.save
 
     redirect_to edit_template_path(@template), alert: 'There was an error saving the template.'
   end
 
-  def show
-    @template = Template.find(params[:id])
-    return redirect_to '/templates' if @template.user_id != current_user.id
-  end
+  def show; end
 
   def destroy
-    @template = Template.find(params[:id])
-    return redirect_to '/templates' if @template.user_id != current_user.id
-
     return redirect_to '/templates', notice: 'Template deleted.' if @template.destroy
 
     redirect_to @template, alert: 'There was an error deleting the template.'
   end
 
   def add_to_hours
-    @template = Template.find(params[:id])
-    return redirect_to '/templates' if @template.user_id != current_user.id
-
     failure = false
     @template.template_hours.each do |h|
       puts h.hours
       hour = Hour.new
+      hour.user_id = current_user.id
       hour.topic_id = h.topic_id
       hour.begin = Time.now - (h.hours || 0) * 3_600 - (h.minutes || 0) * 60
       hour.end = Time.now
@@ -68,5 +56,11 @@ class TemplatesController < ApplicationController
 
   def template_params
     params.require(:template).permit(:title, :description).merge(user_id: current_user.id)
+  end
+
+  def authenticate_permissions!
+    @template = Template.find(params[:id])
+
+    error('You can\'t do that!', '/templates') if @template.user_id != current_user.id
   end
 end

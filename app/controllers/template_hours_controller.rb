@@ -1,7 +1,7 @@
 class TemplateHoursController < ApplicationController
   def new
     @template_hour = TemplateHour.new
-    @topics = Topic.joins(:user).where('users.group_id = ?', current_user.group_id)
+    @topics = Topic.where('topics.group_id = ?', current_user.group_id)
   end
 
   def create
@@ -16,7 +16,7 @@ class TemplateHoursController < ApplicationController
 
   def edit
     @template_hour = TemplateHour.find(params[:id])
-    @topics = Topic.joins(:user).where('users.group_id = ?', current_user.group_id)
+    @topics = Topic.where('topics.group_id = ?', current_user.group_id)
   end
 
   def update
