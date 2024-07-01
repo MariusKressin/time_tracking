@@ -1,7 +1,12 @@
 <div class="flex items-center">
 	<div class="text-xl grow"><%= @group.title %></div>
 	<a href="/organization/edit" class="flex bg-<%= current_user.accent_color %>-800 rounded-full sm:rounded text-white items-center font-bold p-2 sm:px-3 sm:pr-5">
-        <%= heroicon 'pencil', options: { class: 'w-4 ml-1' }, variant: :solid  %>
+		<div class="hidden sm:inline ml-1">
+			<%= heroicon 'pencil', options: { class: 'w-4' }, variant: :solid  %>
+		</div>
+		<div class="inline sm:hidden">
+			<%= heroicon 'pencil', options: { class: 'w-4' }, variant: :mini  %>
+		</div>
 		<div class="hidden sm:block ml-2">Edit</div>
 	</a>
 </div>

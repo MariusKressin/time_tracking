@@ -33,8 +33,8 @@
 </div>
 
 <br />
-<div class="flex mb-4">
-  <div class="w-24 h-24 bg-slate-300 rounded-md mr-2"></div>
+<div class="flex flex-col sm:flex-row mb-4">
+  <div class="w-24 h-24 bg-slate-300 rounded-md mb-2 mr-2"></div>
   <div>
     <div class="text-lg"><%= @user.fname || '' %> <%= @user.lname || '' %> <span class="<%= (@user.role == 4) ? 'text-blue-700' : 'text-slate-600' %>">| <%= role_name(@user.role) %></span></div>
     <div class="text-md text-slate-600"><%= @user.email %></div>
