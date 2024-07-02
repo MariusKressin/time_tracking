@@ -11,6 +11,7 @@ class HoursController < ApplicationController
 
   def edit
     @topics = Topic.all
+    @minutes = -1
   end
 
   def update
