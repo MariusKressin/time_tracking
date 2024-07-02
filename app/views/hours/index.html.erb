@@ -89,8 +89,8 @@
 					<%= button_to 'Delete', hour, method: :delete, class:'block px-5 transition ease font-semibold hover:bg-slate-200 py-2' %>
 				</div>
 			</div>
-			<div class="grow ml-3"><span class="text-slate-600 hidden sm:inline"><%= hour.topic.name %> | </span><span class="ellipsis"><%= hour.short_desc %></span></div>
-			<div class="mr-3 hidden sm:block"><%= (((hour.end - hour.begin)*20/1.hour).floor) / 20.0 %> hours</div>
+			<div class="whitespace-nowrap overflow-hidden overflow-ellipsis grow ml-3"><span class="text-slate-600 hidden sm:inline"><%= hour.topic.name %> | </span><span class="text-ellipsis"><%= hour.short_desc %></span></div>
+			<div class="mr-3 hidden sm:block whitespace-nowrap"><%= (((hour.end - hour.begin)*20/1.hour).floor) / 20.0 %> hours</div>
 			<%= link_to hour, class: 'rounded-full transition ease-in-out hover:bg-slate-300 p-2 block' do %>
 				<%= heroicon 'arrow-long-right', options: { class: 'w-5 h-5' } %>
 			<% end %>
