@@ -13,7 +13,8 @@
 	</head>
 
 	<body class="flex overflow-hidden" data-controller="snackbar">
-		<div class="z-20" data-controller="extend" data-action="blur->extend#closeSidebar">
+		<div class="z-30" data-controller="extend">
+			<div class="hidden opacity-0 bg-slate-900/30 fixed top-0 left-0 w-screen h-screen -z-10 transition ease-in-out" data-action="click->extend#closeSidebar" data-extend-target="back"></div>
 			<aside class="transition ease-in-out fixed -translate-x-72 md:translate-x-0 md:static shadow-2xl shadow-black md:shadow-none bg-<%= current_user.primary_color %>-900 h-screen text-white min-w-[73px] max-w-[18rem]" data-extend-target="menu" data-action="blur->extend#closeSidebar">
 				<div class="overflow-y-scroll overflow-x-hidden text-ellipsis p-2 text-white flex flex-col h-full">
 					<h3 class="font-bold p-4">Time Tracking</h3>
@@ -73,7 +74,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="z-20 translate-x-72 fixed block md:hidden top-2 rounded-e-full pl-1 p-2 bg-<%= current_user.primary_color %>-900 text-white" data-action="click->extend#toggleSidebar" data-extend-target="chevContainer">
+				<div class="z-30 translate-x-72 fixed block md:hidden top-2 rounded-e-full pl-1 p-2 bg-<%= current_user.primary_color %>-900 text-white" data-action="click->extend#toggleSidebar" data-extend-target="chevContainer">
 					<%= heroicon 'chevron-right', options: { 'data-extend-target' => 'chevron', class: 'transition ease-in-out w-5 h-5', disable_default_class: true } %>
 				</div>
 			</aside>
