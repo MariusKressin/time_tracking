@@ -71,6 +71,20 @@ class HoursController < ApplicationController
     send_data to_csv, filename: "hours-export-#{Time.now.strftime('%m-%d-%Y')}", type: 'text/csv'
   end
 
+  def detail
+    html = HoursController
+           .new
+           .render_to_string({
+                               template: '/export/detail',
+                               layout: 'pdf',
+                               locals: {
+                                 :@topics => Topic.all,
+                                 :@totals => totals
+                               }
+                             })
+    send_data Grover.new(html).to_pdf, filename: "hours-detail-pdf-#{Time.now.strftime('%m-%d-%Y')}", type: 'application/pdf'
+  end
+
   private
 
   def hour_params
@@ -110,7 +124,7 @@ class HoursController < ApplicationController
           'Total:',
           t[0].name,
           '',
-          "#{'%0.2f' % (t[1][:time])} hours",
+          "#{(((t[1][:time])*20/1.hour).floor) / 20.0} hours",
           "$#{'%0.2f' % (t[1][:rate] / 100.0)}",
           "$#{'%0.2f' % (t[1][:time] * t[1][:rate] / 100.0)}"
         ]

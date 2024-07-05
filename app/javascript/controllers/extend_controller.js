@@ -38,7 +38,7 @@ export default class extends Controller {
 	closeMenu() {
 		if (this.chevronTarget) this.chevronTarget.classList.remove('rotate-180');
 		this.menuTarget.classList.add('opacity-0');
-		this.menuTarget.classList.add('-translate-x-20');
+		this.menuTarget.classList.add('-translate-y-2');
 		window.setTimeout((() => { this.menuTarget.classList.add('invisible') }).bind(this), 200);
 	}
 

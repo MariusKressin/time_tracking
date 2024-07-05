@@ -48,6 +48,7 @@ Rails.application.routes.draw do
   get '/export/html', to: 'hours#html', layout: 'pdf'
   get '/export/csv', to: 'hours#csv', as: 'export_csv'
   get '/export/pdf', to: 'hours#pdf', as: 'export_pdf'
+  get '/export/detail', to: 'hours#detail', as: 'export_detail'
 
   # Users page
   get '/users', to: 'admin#index'

@@ -1,0 +1,13 @@
+<div class="all-grey all-padding border">
+    <% @topics.each do |topic| %>
+        <div class="divide">
+            <div class="header"><%= topic.name %></div>
+            <% topic.hours.each do |hour| %>
+                <div>
+                    <div><span class="muted"><%= hour.begin.strftime('%m/%d/%y') %> <%= (((hour.end - hour.begin)*20/1.hour).floor) / 20.0 %> hours: </span><%= hour.short_desc %></div>
+                    <p class="muted"><%= hour.long_desc %></p>
+                </div>
+            <% end %>
+        </div>
+    <% end %>
+</div>

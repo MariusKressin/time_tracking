@@ -11,7 +11,7 @@
 		<% topic.hours.sort_by{ |hr| hr.begin }.each do |h| %>
 			<div><%= h.begin.strftime('%m/%d/%y') %></div>
 			<div><%= h.short_desc %></div>
-			<div><%= "%0.2f" %((h.end - h.begin)/1.hour) %> hours</div>
+			<div><%= (((h.end - h.begin)*20/1.hour).floor) / 20.0 %> hours</div>
 			<div>$<%= "%0.2f" %(h.topic.rate/100) %></div>
 			<div style="text-align: right;">$<%= "%0.2f" %((h.end - h.begin) * h.topic.rate / 360000.0) %></div>
 		<% end %>
