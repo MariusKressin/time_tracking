@@ -98,7 +98,7 @@ class HoursController < ApplicationController
       time = 0
       t.hours.each do |h|
         money += ((h.end - h.begin) * h.topic.rate / 360_000.0)
-        time += ((h.end - h.begin) / 1.hour).floor
+        time += ((h.end - h.begin) / 1.hour)
       end
       topic_totals[t] = { topic_id: t.id, money:, rate: t.rate, time: ((time * 20).floor / 20.0) }
     end

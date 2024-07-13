@@ -1,12 +1,12 @@
 <div class="flex items-center">
-	<a href="/topics" class="inline-block">
-		<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline-block w-6 h-6 p-1 mr-2 sm:w-10 sm:h-10 sm:p-2 sm:mr-4 rounded-full transition ease-in-out hover:bg-slate-200">
-			<path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-		</svg>
-	</a>
-	<div class="grow text-lg sm:text-xl">
-		<%= @topic.name %>
-	</div>
+  <a href="/topics" class="inline-block">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline-block w-6 h-6 p-1 mr-2 sm:w-10 sm:h-10 sm:p-2 sm:mr-4 rounded-full transition ease-in-out hover:bg-slate-200">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+    </svg>
+  </a>
+  <div class="grow text-lg sm:text-xl">
+    <%= @topic.name %>
+  </div>
   <% if current_user.role >= 3 %>
     <div data-controller="dialog">
       <%= button_to @topic, class: 'hidden sm:block', data: { action: 'click->dialog#topic_confirm' }, method: :delete do %>
