@@ -7,6 +7,7 @@ class HoursController < ApplicationController
   def index
     @hours = Hour.where(user_id: current_user.id)
     @other_hours = Hour.where(user_id: current_user.visible_users)
+    @total_hours = totals[:time].round
   end
 
   def edit
@@ -25,8 +26,9 @@ class HoursController < ApplicationController
     hours.each do |h|
       failure = true unless h.destroy
     end
-    redirect_to '/hours', notice: 'Hours cleared!' unless failure
-    redirect_to '/hours', alert: 'There was an error clearing the hours.' if failure
+    return redirect_to '/hours', notice: 'Hours cleared!' unless failure
+
+    redirect_to '/hours', alert: 'There was an error clearing the hours.'
   end
 
   def new
@@ -49,7 +51,8 @@ class HoursController < ApplicationController
 
   def html
     @topics = Topic.where(group_id: current_user.group_id)
-    @totals = totals
+    @totals = totals[:topics]
+    @grand_total = totals[:grand]
     render 'export/html', layout: 'pdf'
   end
 
@@ -61,7 +64,8 @@ class HoursController < ApplicationController
                                layout: 'pdf',
                                locals: {
                                  :@topics => Topic.all,
-                                 :@totals => totals
+                                 :@totals => totals[:topics],
+                                 :@grand_total => totals[:grand]
                                }
                              })
     send_data Grover.new(html).to_pdf, filename: "hours-pdf-#{Time.now.strftime('%m-%d-%Y')}", type: 'application/pdf'
@@ -79,7 +83,7 @@ class HoursController < ApplicationController
                                layout: 'pdf',
                                locals: {
                                  :@topics => Topic.all,
-                                 :@totals => totals
+                                 :@totals => totals[:topics]
                                }
                              })
     send_data Grover.new(html).to_pdf, filename: "hours-detail-pdf-#{Time.now.strftime('%m-%d-%Y')}", type: 'application/pdf'
@@ -93,6 +97,8 @@ class HoursController < ApplicationController
 
   def totals
     topic_totals = {}
+    ttime = 0
+    tmoney = 0
     Topic.where(group_id: current_user.group_id).each do |t|
       money = 0
       time = 0
@@ -100,9 +106,11 @@ class HoursController < ApplicationController
         money += ((h.end - h.begin) * h.topic.rate / 360_000.0)
         time += ((h.end - h.begin) / 1.hour)
       end
+      ttime += time
+      tmoney += money
       topic_totals[t] = { topic_id: t.id, money:, rate: t.rate, time: ((time * 20).floor / 20.0) }
     end
-    topic_totals
+    return { topics: topic_totals, time: ttime, grand: { time: ((ttime) * 20).floor / 20.0, money: tmoney } }
   end
 
   def to_csv
@@ -119,12 +127,12 @@ class HoursController < ApplicationController
         ]
       end
       csv << ['---', '---', '---', '---', '---', '---']
-      totals.each do |t|
+      totals[:topics].each do |t|
         csv << [
           'Total:',
           t[0].name,
           '',
-          "#{(((t[1][:time])*20/1.hour).floor) / 20.0} hours",
+          "#{((t[1][:time]) * 20 / 1.hour).floor / 20.0} hours",
           "$#{'%0.2f' % (t[1][:rate] / 100.0)}",
           "$#{'%0.2f' % (t[1][:time] * t[1][:rate] / 100.0)}"
         ]

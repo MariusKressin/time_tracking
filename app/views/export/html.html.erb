@@ -18,10 +18,18 @@
 		<% 5.times do %>
 			<div style="height: 1px; width: 100%; padding: 0; border: 0px solid black; border-top-width: 1px; border-bottom-width: 1px;"></div>
 		<% end %>
-		<strong>Total</strong>
+		<strong><%= topic.name %> Subtotal</strong>
 		<div></div>
 		<div><%= "%0.2f" %(@totals[topic][:time]) %> hours</div>
 		<div>$<%= "%0.2f" %(@totals[topic][:rate] / 100.0) %></div>
 		<div style="text-align: right;">$<%= "%0.2f" %@totals[topic][:money] %></div>
 	<% end %>
+	<% 5.times do %>
+		<div style="height: 1.5px; width: 100%; padding: 0; border: 0px solid black; border-top-width: 1.5px; border-bottom-width: 1.5px;"></div>
+	<% end %>
+	<strong style="font-size: 1.1em;">Grand Total</strong>
+	<div></div>
+	<div style="font-size: 1.1em;"><%= "%0.2f" %(@grand_total[:time]) %> hours</div>
+	<div></div>
+	<div style="text-align: right; font-size: 1.1em;">$<%= "%0.2f" % @grand_total[:money] %></div>
 </div>

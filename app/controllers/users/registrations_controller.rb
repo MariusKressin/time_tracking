@@ -56,9 +56,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /users/sub
   def sub_create
-    if sub_user_params[:role].to_i >= current_user.role
-      return redirect_to '/users/sub', alert: 'You can\'t do that!'
-    end
+    return redirect_to '/users/sub', alert: 'You can\'t do that!' if sub_user_params[:role].to_i >= current_user.role
 
     @user = User.new
     @user.assign_attributes(sub_user_params)
@@ -142,6 +140,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def personal_user_params
-    params.require(:user).permit(:bio, :fname, :lname, :email)
+    params.require(:user).permit(:bio, :fname, :lname, :email, :goal_time, :goal_frequency)
   end
 end

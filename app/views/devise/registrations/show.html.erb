@@ -27,3 +27,12 @@
 <div class="rounded bg-slate-200 my-4 p-4 min-h-[10em] overflow-wrap">
 	<p class="text-wrap"><%= current_user.bio %></p>
 </div>
+
+<% if current_user.goal_time %>
+	<div class="flex">
+		<div class="grow text-lg">
+			<span class="text-bold">Weekly Goal: </span>
+			<%= current_user.goal_time %> hours
+		</div>
+	</div>
+<% end %>
